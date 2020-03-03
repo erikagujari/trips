@@ -5,6 +5,7 @@
 //  Created by AGUJARI Erik on 03/03/2020.
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
+import Foundation
 
 struct TripResponseMapper {
     func map(response: TripResponse) -> Trip {
@@ -13,8 +14,8 @@ struct TripResponseMapper {
                     stops: response.stops?.compactMap { StopResponseMapper().map(response: $0 )} ?? [],
                     destination: DestinationResponseMapper().map(response: response.destination ?? DestinationResponse(address: nil,
                                                                                                                        point: nil)),
-                    endTime: response.endTime ?? "",
-                    startTime: response.startTime ?? "",
+                    endTime: response.endTime?.ISO8601Date ?? Date(),
+                    startTime: response.startTime?.ISO8601Date ?? Date(),
                     description: response.description ?? "",
                     driverName: response.driverName ?? "",
                     route: response.route ?? "",
