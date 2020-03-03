@@ -16,6 +16,12 @@
 		8224C8F0240C371700DC43CD /* TripError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8EF240C371700DC43CD /* TripError.swift */; };
 		8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8F2240C38E400DC43CD /* TripResponse.swift */; };
 		8224C8F5240C3AB300DC43CD /* StopDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8F4240C3AB300DC43CD /* StopDetailResponse.swift */; };
+		8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */; };
+		8245FA5B240E611400CC9DB9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5A240E611400CC9DB9 /* Trip.swift */; };
+		8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */; };
+		8245FA60240E61F100CC9DB9 /* DestinationResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5F240E61F100CC9DB9 /* DestinationResponseMapper.swift */; };
+		8245FA62240E654C00CC9DB9 /* PointResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */; };
+		8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */; };
 		8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A620240BC9480043D6C7 /* AppDelegate.swift */; };
 		8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A622240BC9480043D6C7 /* SceneDelegate.swift */; };
 		8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A624240BC9480043D6C7 /* HomeViewController.swift */; };
@@ -45,6 +51,12 @@
 		8224C8EF240C371700DC43CD /* TripError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripError.swift; sourceTree = "<group>"; };
 		8224C8F2240C38E400DC43CD /* TripResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponse.swift; sourceTree = "<group>"; };
 		8224C8F4240C3AB300DC43CD /* StopDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDetailResponse.swift; sourceTree = "<group>"; };
+		8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveTripsUseCase.swift; sourceTree = "<group>"; };
+		8245FA5A240E611400CC9DB9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponseMapper.swift; sourceTree = "<group>"; };
+		8245FA5F240E61F100CC9DB9 /* DestinationResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationResponseMapper.swift; sourceTree = "<group>"; };
+		8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointResponseMapper.swift; sourceTree = "<group>"; };
+		8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopResponseMapper.swift; sourceTree = "<group>"; };
 		8299A61D240BC9480043D6C7 /* Trips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A620240BC9480043D6C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8299A622240BC9480043D6C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +143,43 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		8245FA53240E5FD800CC9DB9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				8245FA5C240E617B00CC9DB9 /* Mappers */,
+				8245FA59240E610B00CC9DB9 /* Entities */,
+				8245FA54240E5FEA00CC9DB9 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		8245FA54240E5FEA00CC9DB9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		8245FA59240E610B00CC9DB9 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				8245FA5A240E611400CC9DB9 /* Trip.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		8245FA5C240E617B00CC9DB9 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				8245FA5F240E61F100CC9DB9 /* DestinationResponseMapper.swift */,
+				8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */,
+				8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */,
+				8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */,
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
 		8299A614240BC9480043D6C7 = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				8224C8E5240C33E100DC43CD /* App */,
+				8245FA53240E5FD800CC9DB9 /* Domain */,
 				8224C8E3240C33D800DC43CD /* Data */,
 				82018059240BD5290080F811 /* LaunchScreen.storyboard */,
 				8299A620240BC9480043D6C7 /* AppDelegate.swift */,
@@ -283,17 +333,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8245FA60240E61F100CC9DB9 /* DestinationResponseMapper.swift in Sources */,
 				8224C8F5240C3AB300DC43CD /* StopDetailResponse.swift in Sources */,
+				8245FA62240E654C00CC9DB9 /* PointResponseMapper.swift in Sources */,
 				8299A62B240BC9480043D6C7 /* Trips.xcdatamodeld in Sources */,
 				8224C8EC240C352A00DC43CD /* TripService.swift in Sources */,
+				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
 				8224C8EA240C34A600DC43CD /* Service.swift in Sources */,
 				8224C8EE240C36DA00DC43CD /* TripServiceProvider.swift in Sources */,
 				8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */,
+				8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */,
 				8224C8F0240C371700DC43CD /* TripError.swift in Sources */,
+				8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */,
 				8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */,
 				8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */,
 				8224C8E7240C340000DC43CD /* TripRepository.swift in Sources */,
 				8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */,
+				8245FA5B240E611400CC9DB9 /* Trip.swift in Sources */,
 				8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

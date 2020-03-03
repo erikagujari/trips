@@ -13,15 +13,15 @@ enum TripService {
 
 extension TripService: Service {
     var baseURL: String {
-        return "https://europe-west1-metropolis-fe-test.cloudfunctions.net/api"
+        return "https://europe-west1-metropolis-fe-test.cloudfunctions.net"
     }
 
     var path: String {
         switch self {
         case .trips:
-            return "/trips"
+            return "/api/trips"
         case .stops(let id):
-            return "/stops/\(id)"
+            return "/api/stops/\(id)"
         }
     }
 

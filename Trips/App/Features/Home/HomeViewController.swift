@@ -9,9 +9,11 @@
 import MapKit
 
 final class HomeViewController: UIViewController {
+    private let viewModel: HomeViewModelProtocol = HomeViewModel()
     private var mapView: MKMapView?
     private var tableView: UITableView?
     private var contactButton: UIButton?
+
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,7 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
 
         navigationController?.setNavigationBarHidden(true, animated: false)
+        viewModel.retrieveTrips()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
