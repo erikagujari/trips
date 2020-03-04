@@ -13,6 +13,8 @@
 		822497DE240F938700150B8D /* HomeCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497DD240F938700150B8D /* HomeCellModel.swift */; };
 		822497E1240FA94500150B8D /* HomeCellMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E0240FA94500150B8D /* HomeCellMapper.swift */; };
 		822497E3240FA98E00150B8D /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E2240FA98E00150B8D /* Date+String.swift */; };
+		822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E4240FCF9000150B8D /* HomeViewModelTests.swift */; };
+		822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E7240FD11400150B8D /* MockHomeViewModelDependencies.swift */; };
 		8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E1240C334100DC43CD /* HomeViewModel.swift */; };
 		8224C8E7240C340000DC43CD /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E6240C340000DC43CD /* TripRepository.swift */; };
 		8224C8EA240C34A600DC43CD /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E9240C34A600DC43CD /* Service.swift */; };
@@ -54,6 +56,8 @@
 		822497DD240F938700150B8D /* HomeCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellModel.swift; sourceTree = "<group>"; };
 		822497E0240FA94500150B8D /* HomeCellMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellMapper.swift; sourceTree = "<group>"; };
 		822497E2240FA98E00150B8D /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		822497E4240FCF9000150B8D /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		822497E7240FD11400150B8D /* MockHomeViewModelDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModelDependencies.swift; sourceTree = "<group>"; };
 		8224C8E1240C334100DC43CD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8224C8E6240C340000DC43CD /* TripRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepository.swift; sourceTree = "<group>"; };
 		8224C8E9240C34A600DC43CD /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -148,6 +152,14 @@
 				822497E0240FA94500150B8D /* HomeCellMapper.swift */,
 			);
 			path = Mappers;
+			sourceTree = "<group>";
+		};
+		822497E6240FD0FA00150B8D /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				822497E7240FD11400150B8D /* MockHomeViewModelDependencies.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		8224C8E3240C33D800DC43CD /* Data */ = {
@@ -294,8 +306,10 @@
 		8299A639240BC94A0043D6C7 /* TripsTests */ = {
 			isa = PBXGroup;
 			children = (
+				822497E6240FD0FA00150B8D /* Mocks */,
 				8299A63A240BC94A0043D6C7 /* TripsTests.swift */,
 				8299A63C240BC94A0043D6C7 /* Info.plist */,
+				822497E4240FCF9000150B8D /* HomeViewModelTests.swift */,
 			);
 			path = TripsTests;
 			sourceTree = "<group>";
@@ -511,6 +525,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8299A63B240BC94A0043D6C7 /* TripsTests.swift in Sources */,
+				822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */,
+				822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
