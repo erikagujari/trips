@@ -23,6 +23,8 @@ final class HomeViewModelTests: XCTestCase {
     }
 
     func testTripsSuccess() {
+        XCTAssert(!sut.isFetching)
+        XCTAssert(sut.errorMessage.isEmpty)
         sut.retrieveTrips()
         XCTAssert(!sut.cellModels.isEmpty)
     }

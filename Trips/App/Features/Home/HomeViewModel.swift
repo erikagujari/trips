@@ -9,6 +9,8 @@ import Combine
 
 class HomePublishedProperties {
     @Published var cellModels: [HomeCellModel] = []
+    @Published var isFetching: Bool = false
+    @Published var errorMessage: String = ""
 }
 
 protocol HomeViewModelProtocol: HomePublishedProperties {
@@ -37,15 +39,15 @@ final class HomeViewModel: HomePublishedProperties {
 
 extension HomeViewModel: HomeViewModelProtocol {
     func retrieveTrips() {
-        //TODO: show and hide spinner
+        isFetching = true
         dependencies.tripsUseCase.trips
-        .sink(receiveCompletion: { event in
+        .sink(receiveCompletion: { [weak self] event in
             switch event {
-            case .finished:
-                print("update ui")
+            case .finished: break
             case .failure(let error):
-                print("show error")
+                self?.errorMessage = error.message
             }
+            self?.isFetching = false
         }) { [weak self] trips in
             self?.cellModels = self?.dependencies.mapper.mapArray(domainArray: trips) ?? []
         }

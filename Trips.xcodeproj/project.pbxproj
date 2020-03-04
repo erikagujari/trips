@@ -15,6 +15,8 @@
 		822497E3240FA98E00150B8D /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E2240FA98E00150B8D /* Date+String.swift */; };
 		822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E4240FCF9000150B8D /* HomeViewModelTests.swift */; };
 		822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E7240FD11400150B8D /* MockHomeViewModelDependencies.swift */; };
+		822497EA240FE83900150B8D /* ViewController+Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E9240FE83900150B8D /* ViewController+Spinner.swift */; };
+		822497EC240FEEB400150B8D /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497EB240FEEB400150B8D /* HomeTableViewCell.swift */; };
 		8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E1240C334100DC43CD /* HomeViewModel.swift */; };
 		8224C8E7240C340000DC43CD /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E6240C340000DC43CD /* TripRepository.swift */; };
 		8224C8EA240C34A600DC43CD /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E9240C34A600DC43CD /* Service.swift */; };
@@ -58,6 +60,8 @@
 		822497E2240FA98E00150B8D /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		822497E4240FCF9000150B8D /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		822497E7240FD11400150B8D /* MockHomeViewModelDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModelDependencies.swift; sourceTree = "<group>"; };
+		822497E9240FE83900150B8D /* ViewController+Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Spinner.swift"; sourceTree = "<group>"; };
+		822497EB240FEEB400150B8D /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		8224C8E1240C334100DC43CD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8224C8E6240C340000DC43CD /* TripRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepository.swift; sourceTree = "<group>"; };
 		8224C8E9240C34A600DC43CD /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				822497DC240F937100150B8D /* Model */,
+				822497EB240FEEB400150B8D /* HomeTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			children = (
 				8245FA66240E865100CC9DB9 /* String+Date.swift */,
 				822497E2240FA98E00150B8D /* Date+String.swift */,
+				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -500,6 +506,8 @@
 				8245FA62240E654C00CC9DB9 /* PointResponseMapper.swift in Sources */,
 				8299A62B240BC9480043D6C7 /* Trips.xcdatamodeld in Sources */,
 				822497DE240F938700150B8D /* HomeCellModel.swift in Sources */,
+				822497EA240FE83900150B8D /* ViewController+Spinner.swift in Sources */,
+				822497EC240FEEB400150B8D /* HomeTableViewCell.swift in Sources */,
 				8224C8EC240C352A00DC43CD /* TripService.swift in Sources */,
 				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
 				8224C8EA240C34A600DC43CD /* Service.swift in Sources */,

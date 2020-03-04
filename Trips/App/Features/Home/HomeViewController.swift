@@ -20,6 +20,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupBinding()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -27,9 +28,6 @@ final class HomeViewController: UIViewController {
 
         navigationController?.setNavigationBarHidden(true, animated: false)
         viewModel.retrieveTrips()
-        viewModel.$cellModels.sink { cells in
-            //TODO: reloadData and update cells
-        }.store(in: &cancellable)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +42,26 @@ final class HomeViewController: UIViewController {
         setupMap()
         setupTableView()
         setupContactButton()
+    }
+
+    private func setupBinding() {
+        viewModel.$cellModels.sink { [weak self] cells in
+            DispatchQueue.main.async {
+                self?.tableView?.reloadData()
+            }
+        }.store(in: &cancellable)
+
+        viewModel.$isFetching.sink { [weak self] isFetching in
+            isFetching ? self?.showSpinner() : self?.hideSpinner()
+        }.store(in: &cancellable)
+
+        viewModel.$errorMessage.sink(receiveValue: { [weak self] message in
+            guard !message.isEmpty else { return }
+
+            self?.showError(message: message, completion: {
+                self?.viewModel.retrieveTrips()
+            })
+        }).store(in: &cancellable)
     }
 
     private func setupMap() {
@@ -63,6 +81,9 @@ final class HomeViewController: UIViewController {
         guard let tableView = tableView,
             let mapView = mapView
             else { return }
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.description())
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         NSLayoutConstraint.activate([tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -81,6 +102,29 @@ final class HomeViewController: UIViewController {
                                                                              constant: -Constants.defaultMargin),
                                      contactButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                                         constant: Constants.defaultMargin)])
+    }
+}
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.cellModels.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: HomeTableViewCell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.description(), for: indexPath) as? HomeTableViewCell,
+            viewModel.cellModels.indices.contains(indexPath.row)
+            else {
+                return UITableViewCell()
+        }
+
+        cell.configure(model: viewModel.cellModels[indexPath.row])
+        return cell
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //TODO: show selected route on the map
     }
 }
 

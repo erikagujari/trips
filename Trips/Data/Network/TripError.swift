@@ -8,4 +8,13 @@
 
 enum TripError: Error {
     case serviceError, parsingError
+
+    var message: String {
+        switch self {
+        case .serviceError:
+            return "We had an error, you should try again"
+        case .parsingError:
+            return "Sorry, data corrupted :("
+        }
+    }
 }
