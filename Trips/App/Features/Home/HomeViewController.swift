@@ -7,9 +7,11 @@
 //
 
 import MapKit
+import Combine
 
 final class HomeViewController: UIViewController {
     private let viewModel: HomeViewModelProtocol = HomeViewModel()
+    private var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     private var mapView: MKMapView?
     private var tableView: UITableView?
     private var contactButton: UIButton?
@@ -25,6 +27,9 @@ final class HomeViewController: UIViewController {
 
         navigationController?.setNavigationBarHidden(true, animated: false)
         viewModel.retrieveTrips()
+        viewModel.$cellModels.sink { cells in
+            //TODO: reloadData and update cells
+        }.store(in: &cancellable)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

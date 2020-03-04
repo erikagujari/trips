@@ -5,7 +5,7 @@
 //  Created by AGUJARI Erik on 03/03/2020.
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
-import Foundation
+import Polyline
 
 struct TripResponseMapper {
     func map(response: TripResponse) -> Trip {
@@ -18,7 +18,7 @@ struct TripResponseMapper {
                     startTime: response.startTime?.ISO8601Date ?? Date(),
                     description: response.description ?? "",
                     driverName: response.driverName ?? "",
-                    route: response.route ?? "",
+                    route: Polyline(encodedPolyline: response.route ?? "").coordinates ?? [],
                     status: response.status ?? "")
     }
 

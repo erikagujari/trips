@@ -7,21 +7,27 @@
 //
 import Combine
 
-protocol HomeViewModelProtocol {
+class HomePublishedProperties {
+    @Published var cellModels: [HomeCellModel] = []
+}
+
+protocol HomeViewModelProtocol: HomePublishedProperties {
     func retrieveTrips()
 }
 
 protocol HomeViewModelDependenciesProtocol {
     var cancellable: Set<AnyCancellable> { get set }
     var tripsUseCase: RetrieveTripsUseCaseProtocol { get }
+    var mapper: HomeCellMapper { get }
 }
 
 struct HomeViewModelDependencies: HomeViewModelDependenciesProtocol {
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     var tripsUseCase: RetrieveTripsUseCaseProtocol = RetrieveTripsUseCase()
+    var mapper: HomeCellMapper = HomeCellMapper()
 }
 
-final class HomeViewModel {
+final class HomeViewModel: HomePublishedProperties {
     var dependencies: HomeViewModelDependenciesProtocol
 
     init(dependencies: HomeViewModelDependenciesProtocol = HomeViewModelDependencies()) {
@@ -40,8 +46,8 @@ extension HomeViewModel: HomeViewModelProtocol {
             case .failure(let error):
                 print("show error")
             }
-        }) { trips in
-            print(trips)
+        }) { [weak self] trips in
+            self?.cellModels = self?.dependencies.mapper.mapArray(domainArray: trips) ?? []
         }
         .store(in: &dependencies.cancellable)
     }

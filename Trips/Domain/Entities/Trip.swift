@@ -5,7 +5,7 @@
 //  Created by AGUJARI Erik on 03/03/2020.
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
-import Foundation
+import CoreLocation
 
 struct Trip {
     let origin: Destination
@@ -15,7 +15,7 @@ struct Trip {
     let startTime: Date
     let description: String
     let driverName: String
-    let route: String
+    let route: [CLLocationCoordinate2D]
     let status: String
 }
 
