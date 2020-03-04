@@ -36,7 +36,7 @@ final class HomeTableViewCell: UITableViewCell {
     }()
     private let originTimeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .lightGray
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 15)
         return label
@@ -56,7 +56,7 @@ final class HomeTableViewCell: UITableViewCell {
     }()
     private let destinationTimeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .lightGray
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 15)
         return label
@@ -66,15 +66,29 @@ final class HomeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        selectionStyle = .none
+        setupLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    //MARK: Private
+    private func setupLayout() {
         let contentStackView = UIStackView()
         contentStackView.axis = .vertical
         contentStackView.spacing = Constants.verticalSpacing
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(contentStackView)
-        NSLayoutConstraint.activate([contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                                     contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                                     contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                                     contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)])
+        NSLayoutConstraint.activate([contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                                               constant: Constants.horizontalSpacing),
+                                     contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                                                constant: -Constants.horizontalSpacing),
+                                     contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                                           constant: Constants.verticalSpacing),
+                                     contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                                              constant: -Constants.verticalSpacing)])
 
         let driverStackView = UIStackView()
         driverStackView.axis = .horizontal
@@ -89,12 +103,14 @@ final class HomeTableViewCell: UITableViewCell {
         originStackView.alignment = .leading
         originStackView.spacing = Constants.horizontalSpacing
         let originContentStackView = UIStackView()
-        originStackView.axis = .horizontal
-        originStackView.spacing = Constants.horizontalSpacing
-        originStackView.alignment = .leading
+        originContentStackView.axis = .horizontal
+        originContentStackView.spacing = Constants.horizontalSpacing
+        originContentStackView.alignment = .leading
         let originTimeStackView = UIStackView()
         originTimeStackView.axis = .vertical
+        originTimeStackView.alignment = .leading
         originTimeStackView.spacing = Constants.verticalSpacing
+
         originTimeStackView.addArrangedSubview(originAddressLabel)
         originTimeStackView.addArrangedSubview(originTimeLabel)
         originContentStackView.addArrangedSubview(originTimeStackView)
@@ -102,19 +118,21 @@ final class HomeTableViewCell: UITableViewCell {
         originStackView.addArrangedSubview(originContentStackView)
         contentStackView.addArrangedSubview(originStackView)
 
-
-
         let destinationStackView = UIStackView()
         destinationStackView.axis = .horizontal
         destinationStackView.spacing = Constants.horizontalSpacing
+        destinationStackView.alignment = .leading
         let destinationContentStackView = UIStackView()
-        destinationStackView.axis = .horizontal
-        destinationStackView.spacing = Constants.horizontalSpacing
+        destinationContentStackView.axis = .horizontal
+        destinationContentStackView.spacing = Constants.horizontalSpacing
+        destinationContentStackView.alignment = .leading
         let destinationTimeStackView = UIStackView()
         destinationTimeStackView.axis = .vertical
         destinationTimeStackView.spacing = Constants.verticalSpacing
-        destinationContentStackView.addArrangedSubview(destinationAddressLabel)
-        destinationContentStackView.addArrangedSubview(destinationTimeLabel)
+        destinationTimeStackView.alignment = .leading
+
+        destinationTimeStackView.addArrangedSubview(destinationAddressLabel)
+        destinationTimeStackView.addArrangedSubview(destinationTimeLabel)
         destinationContentStackView.addArrangedSubview(destinationTimeStackView)
         destinationStackView.addArrangedSubview(destinationTitleLabel)
         destinationStackView.addArrangedSubview(destinationContentStackView)
@@ -122,10 +140,6 @@ final class HomeTableViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([driverNameLabel.leadingAnchor.constraint(equalTo: originContentStackView.leadingAnchor),
                                     driverNameLabel.leadingAnchor.constraint(equalTo: destinationContentStackView.leadingAnchor)])
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
 }
 
