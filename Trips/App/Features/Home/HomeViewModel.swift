@@ -6,6 +6,7 @@
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
 import Combine
+import CoreLocation
 
 class HomePublishedProperties {
     @Published var cellModels: [HomeCellModel] = []
@@ -15,6 +16,7 @@ class HomePublishedProperties {
 
 protocol HomeViewModelProtocol: HomePublishedProperties {
     func retrieveTrips()
+    func route(forTrip index: Int) -> [CLLocationCoordinate2D]
 }
 
 protocol HomeViewModelDependenciesProtocol {
@@ -30,6 +32,7 @@ struct HomeViewModelDependencies: HomeViewModelDependenciesProtocol {
 }
 
 final class HomeViewModel: HomePublishedProperties {
+    private var trips: [Trip] = []
     var dependencies: HomeViewModelDependenciesProtocol
 
     init(dependencies: HomeViewModelDependenciesProtocol = HomeViewModelDependencies()) {
@@ -46,11 +49,21 @@ extension HomeViewModel: HomeViewModelProtocol {
             case .finished: break
             case .failure(let error):
                 self?.errorMessage = error.message
+                self?.isFetching = false
             }
-            self?.isFetching = false
         }) { [weak self] trips in
+            self?.trips = trips
             self?.cellModels = self?.dependencies.mapper.mapArray(domainArray: trips) ?? []
+            self?.isFetching = false
         }
         .store(in: &dependencies.cancellable)
+    }
+
+    func route(forTrip index: Int) -> [CLLocationCoordinate2D] {
+        guard trips.indices.contains(index)
+            else {
+                return []
+        }
+        return trips[index].route
     }
 }

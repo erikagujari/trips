@@ -66,6 +66,7 @@ final class HomeViewController: UIViewController {
 
     private func setupMap() {
         mapView = MKMapView()
+        mapView?.delegate = self
         guard let mapView = mapView else { return }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
@@ -103,6 +104,34 @@ final class HomeViewController: UIViewController {
                                      contactButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                                         constant: Constants.defaultMargin)])
     }
+
+    private func setMap(route: [CLLocationCoordinate2D]) {
+        removeRoutes()
+        let polyline = MKPolyline(coordinates: route, count: route.count)
+        mapView?.addOverlay(polyline)
+        centerMap(on: polyline)
+    }
+
+    private func centerMap(on polyline: MKPolyline) {
+        var regionRect = polyline.boundingMapRect
+        let widthPadding = regionRect.size.width * 0.25
+        let heightPadding = regionRect.size.height * 0.25
+
+        regionRect.size.width += widthPadding
+        regionRect.size.height += heightPadding
+
+        regionRect.origin.x -= widthPadding / 2
+        regionRect.origin.y -= heightPadding / 2
+
+        mapView?.setRegion(MKCoordinateRegion(regionRect), animated: true)
+    }
+
+    private func removeRoutes() {
+        guard let overlays = mapView?.overlays else {
+            return
+        }
+        mapView?.removeOverlays(overlays)
+    }
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -124,7 +153,18 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO: show selected route on the map
+        setMap(route: viewModel.route(forTrip: indexPath.row))
+    }
+}
+
+extension HomeViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        guard let polyline = overlay as? MKPolyline else { return MKOverlayRenderer( )}
+
+        let renderer = MKPolylineRenderer(polyline: polyline)
+        renderer.strokeColor = .blue
+        renderer.lineWidth = Constants.polylineWidth
+        return renderer
     }
 }
 
@@ -132,5 +172,6 @@ private extension HomeViewController {
     enum Constants {
         static let mapViewMultiplier: CGFloat = 0.6
         static let defaultMargin: CGFloat = 20
+        static let polylineWidth: CGFloat = 3
     }
 }
