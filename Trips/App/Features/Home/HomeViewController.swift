@@ -112,6 +112,15 @@ final class HomeViewController: UIViewController {
         centerMap(on: polyline)
     }
 
+    private func setMap(stops: [CLLocationCoordinate2D]) {
+        removeStops()
+        mapView?.addAnnotations(stops.map { stop -> MKAnnotation in
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = stop
+            return annotation
+        })
+    }
+
     private func centerMap(on polyline: MKPolyline) {
         var regionRect = polyline.boundingMapRect
         let widthPadding = regionRect.size.width * 0.25
@@ -131,6 +140,13 @@ final class HomeViewController: UIViewController {
             return
         }
         mapView?.removeOverlays(overlays)
+    }
+
+    private func removeStops() {
+        guard let annotations = mapView?.annotations else {
+            return
+        }
+        mapView?.removeAnnotations(annotations)
     }
 }
 
@@ -154,6 +170,7 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         setMap(route: viewModel.route(forTrip: indexPath.row))
+        setMap(stops: viewModel.route(forTrip: indexPath.row))
     }
 }
 
@@ -165,6 +182,15 @@ extension HomeViewController: MKMapViewDelegate {
         renderer.strokeColor = .blue
         renderer.lineWidth = Constants.polylineWidth
         return renderer
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation,
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Annotation")
+            else { return nil }
+        annotationView.annotation = annotation
+        annotationView.canShowCallout = true
+        return annotationView
     }
 }
 

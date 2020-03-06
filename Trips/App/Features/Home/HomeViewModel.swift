@@ -17,6 +17,7 @@ class HomePublishedProperties {
 protocol HomeViewModelProtocol: HomePublishedProperties {
     func retrieveTrips()
     func route(forTrip index: Int) -> [CLLocationCoordinate2D]
+    func stops(forTrip index: Int) -> [CLLocationCoordinate2D]
 }
 
 protocol HomeViewModelDependenciesProtocol {
@@ -33,6 +34,7 @@ struct HomeViewModelDependencies: HomeViewModelDependenciesProtocol {
 
 final class HomeViewModel: HomePublishedProperties {
     private var trips: [Trip] = []
+    private var selectedTrip: Int?
     var dependencies: HomeViewModelDependenciesProtocol
 
     init(dependencies: HomeViewModelDependenciesProtocol = HomeViewModelDependencies()) {
@@ -64,6 +66,16 @@ extension HomeViewModel: HomeViewModelProtocol {
             else {
                 return []
         }
+        selectedTrip = index
         return trips[index].route
+    }
+
+    func stops(forTrip index: Int) -> [CLLocationCoordinate2D] {
+        guard trips.indices.contains(index)
+            else {
+                return []
+        }
+
+        return trips[index].stops.map { $0.point.coordinate }
     }
 }

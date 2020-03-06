@@ -27,6 +27,10 @@ struct Destination {
 struct Point {
     let latitude: Double
     let longitude: Double
+
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }
 
 struct Stop {
