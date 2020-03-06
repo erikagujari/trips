@@ -25,6 +25,13 @@
 		8224C8F0240C371700DC43CD /* TripError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8EF240C371700DC43CD /* TripError.swift */; };
 		8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8F2240C38E400DC43CD /* TripResponse.swift */; };
 		8224C8F5240C3AB300DC43CD /* StopDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8F4240C3AB300DC43CD /* StopDetailResponse.swift */; };
+		822855EC2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855EB2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift */; };
+		822855EE2412B8E200D34212 /* RetrieveStopDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855ED2412B8E200D34212 /* RetrieveStopDetailUseCase.swift */; };
+		822855F02412B99000D34212 /* StopDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855EF2412B99000D34212 /* StopDetail.swift */; };
+		822855F22412B9C900D34212 /* StopDetailResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855F12412B9C900D34212 /* StopDetailResponseMapper.swift */; };
+		822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855F72412BF3900D34212 /* StopAnnotationModel.swift */; };
+		822855FA2412C46000D34212 /* StopAnnotationMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855F92412C46000D34212 /* StopAnnotationMapper.swift */; };
+		822855FC2412C8FC00D34212 /* StopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855FB2412C8FC00D34212 /* StopDetailView.swift */; };
 		8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */; };
 		8245FA5B240E611400CC9DB9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5A240E611400CC9DB9 /* Trip.swift */; };
 		8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */; };
@@ -70,6 +77,13 @@
 		8224C8EF240C371700DC43CD /* TripError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripError.swift; sourceTree = "<group>"; };
 		8224C8F2240C38E400DC43CD /* TripResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponse.swift; sourceTree = "<group>"; };
 		8224C8F4240C3AB300DC43CD /* StopDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDetailResponse.swift; sourceTree = "<group>"; };
+		822855EB2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
+		822855ED2412B8E200D34212 /* RetrieveStopDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveStopDetailUseCase.swift; sourceTree = "<group>"; };
+		822855EF2412B99000D34212 /* StopDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDetail.swift; sourceTree = "<group>"; };
+		822855F12412B9C900D34212 /* StopDetailResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDetailResponseMapper.swift; sourceTree = "<group>"; };
+		822855F72412BF3900D34212 /* StopAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotationModel.swift; sourceTree = "<group>"; };
+		822855F92412C46000D34212 /* StopAnnotationMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotationMapper.swift; sourceTree = "<group>"; };
+		822855FB2412C8FC00D34212 /* StopDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopDetailView.swift; sourceTree = "<group>"; };
 		8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveTripsUseCase.swift; sourceTree = "<group>"; };
 		8245FA5A240E611400CC9DB9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponseMapper.swift; sourceTree = "<group>"; };
@@ -155,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				822497E0240FA94500150B8D /* HomeCellMapper.swift */,
+				822855F92412C46000D34212 /* StopAnnotationMapper.swift */,
 			);
 			path = Mappers;
 			sourceTree = "<group>";
@@ -217,12 +232,30 @@
 		8224C8F6240C3B5900DC43CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				822855F32412BF0C00D34212 /* Views */,
 				822497DF240FA93300150B8D /* Mappers */,
 				822497DB240F935000150B8D /* Cells */,
 				8299A624240BC9480043D6C7 /* HomeViewController.swift */,
 				8224C8E1240C334100DC43CD /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		822855F32412BF0C00D34212 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				822855FB2412C8FC00D34212 /* StopDetailView.swift */,
+				822855F62412BF2E00D34212 /* Model */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		822855F62412BF2E00D34212 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				822855F72412BF3900D34212 /* StopAnnotationModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8245FA53240E5FD800CC9DB9 /* Domain */ = {
@@ -239,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */,
+				822855ED2412B8E200D34212 /* RetrieveStopDetailUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -247,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				8245FA5A240E611400CC9DB9 /* Trip.swift */,
+				822855EF2412B99000D34212 /* StopDetail.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -256,6 +291,7 @@
 			children = (
 				8245FA5F240E61F100CC9DB9 /* DestinationResponseMapper.swift */,
 				8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */,
+				822855F12412B9C900D34212 /* StopDetailResponseMapper.swift */,
 				8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */,
 				8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */,
 			);
@@ -265,8 +301,9 @@
 		8245FA65240E864400CC9DB9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8245FA66240E865100CC9DB9 /* String+Date.swift */,
+				822855EB2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift */,
 				822497E2240FA98E00150B8D /* Date+String.swift */,
+				8245FA66240E865100CC9DB9 /* String+Date.swift */,
 				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
 			);
 			path = Extensions;
@@ -503,23 +540,30 @@
 			files = (
 				8245FA60240E61F100CC9DB9 /* DestinationResponseMapper.swift in Sources */,
 				8224C8F5240C3AB300DC43CD /* StopDetailResponse.swift in Sources */,
+				822855EC2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift in Sources */,
 				8245FA62240E654C00CC9DB9 /* PointResponseMapper.swift in Sources */,
 				8299A62B240BC9480043D6C7 /* Trips.xcdatamodeld in Sources */,
 				822497DE240F938700150B8D /* HomeCellModel.swift in Sources */,
 				822497EA240FE83900150B8D /* ViewController+Spinner.swift in Sources */,
 				822497EC240FEEB400150B8D /* HomeTableViewCell.swift in Sources */,
+				822855FC2412C8FC00D34212 /* StopDetailView.swift in Sources */,
+				822855FA2412C46000D34212 /* StopAnnotationMapper.swift in Sources */,
 				8224C8EC240C352A00DC43CD /* TripService.swift in Sources */,
 				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
+				822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */,
 				8224C8EA240C34A600DC43CD /* Service.swift in Sources */,
 				8224C8EE240C36DA00DC43CD /* TripServiceProvider.swift in Sources */,
+				822855EE2412B8E200D34212 /* RetrieveStopDetailUseCase.swift in Sources */,
 				8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */,
 				8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */,
 				8224C8F0240C371700DC43CD /* TripError.swift in Sources */,
 				8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */,
+				822855F02412B99000D34212 /* StopDetail.swift in Sources */,
 				8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */,
 				8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */,
 				8245FA67240E865100CC9DB9 /* String+Date.swift in Sources */,
 				822497E1240FA94500150B8D /* HomeCellMapper.swift in Sources */,
+				822855F22412B9C900D34212 /* StopDetailResponseMapper.swift in Sources */,
 				8224C8E7240C340000DC43CD /* TripRepository.swift in Sources */,
 				822497E3240FA98E00150B8D /* Date+String.swift in Sources */,
 				8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */,

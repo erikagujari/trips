@@ -12,24 +12,30 @@ class HomePublishedProperties {
     @Published var cellModels: [HomeCellModel] = []
     @Published var isFetching: Bool = false
     @Published var errorMessage: String = ""
+    @Published var stopDetail: StopAnnotationModel?
 }
 
 protocol HomeViewModelProtocol: HomePublishedProperties {
     func retrieveTrips()
     func route(forTrip index: Int) -> [CLLocationCoordinate2D]
     func stops(forTrip index: Int) -> [CLLocationCoordinate2D]
+    func retrieveStopDetail(for coordinate: CLLocationCoordinate2D)
 }
 
 protocol HomeViewModelDependenciesProtocol {
     var cancellable: Set<AnyCancellable> { get set }
     var tripsUseCase: RetrieveTripsUseCaseProtocol { get }
-    var mapper: HomeCellMapper { get }
+    var stopUseCase: RetrieveStopDetailUseCaseProtocol { get }
+    var cellMapper: HomeCellMapper { get }
+    var annotationMapper: StopAnnotationMapper { get }
 }
 
 struct HomeViewModelDependencies: HomeViewModelDependenciesProtocol {
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     var tripsUseCase: RetrieveTripsUseCaseProtocol = RetrieveTripsUseCase()
-    var mapper: HomeCellMapper = HomeCellMapper()
+    var stopUseCase: RetrieveStopDetailUseCaseProtocol = RetrieveStopDetailUseCase()
+    var cellMapper: HomeCellMapper = HomeCellMapper()
+    var annotationMapper: StopAnnotationMapper = StopAnnotationMapper()
 }
 
 final class HomeViewModel: HomePublishedProperties {
@@ -55,7 +61,7 @@ extension HomeViewModel: HomeViewModelProtocol {
             }
         }) { [weak self] trips in
             self?.trips = trips
-            self?.cellModels = self?.dependencies.mapper.mapArray(domainArray: trips) ?? []
+            self?.cellModels = self?.dependencies.cellMapper.mapArray(domainArray: trips) ?? []
             self?.isFetching = false
         }
         .store(in: &dependencies.cancellable)
@@ -77,5 +83,30 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
 
         return trips[index].stops.map { $0.point.coordinate }
+    }
+
+    func retrieveStopDetail(for coordinate: CLLocationCoordinate2D) {
+        isFetching = true
+        guard let selectedTrip = selectedTrip,
+            trips.indices.contains(selectedTrip),
+            let id = trips[selectedTrip].stops.first(where: { $0.point.coordinate == coordinate })?.id
+            else {
+                isFetching = false
+                return
+        }
+        dependencies.stopUseCase.fetchStopDetail(id: id)
+            .sink(receiveCompletion: { [weak self] event in
+                switch event {
+                case .finished: break
+                case .failure(let error):
+                    self?.stopDetail = nil
+                    self?.errorMessage = error.message
+                    self?.isFetching = false
+                }
+            }) { [weak self] detail in
+                self?.stopDetail = self?.dependencies.annotationMapper.map(domain: detail)
+                self?.isFetching = false
+        }
+        .store(in: &dependencies.cancellable)
     }
 }

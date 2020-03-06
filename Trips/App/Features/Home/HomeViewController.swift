@@ -15,6 +15,7 @@ final class HomeViewController: UIViewController {
     private var mapView: MKMapView?
     private var tableView: UITableView?
     private var contactButton: UIButton?
+    private var selectedAnnotationView: MKAnnotationView?
 
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -62,11 +63,22 @@ final class HomeViewController: UIViewController {
                 self?.viewModel.retrieveTrips()
             })
         }).store(in: &cancellable)
+
+        viewModel.$stopDetail.sink { [weak self] detail in
+            guard let selectedAnnotation = self?.selectedAnnotationView?.detailCalloutAccessoryView as? StopDetailView,
+                let detail = detail
+                else { return }
+
+            DispatchQueue.main.async {
+                selectedAnnotation.configure(model: detail)
+            }
+        }.store(in: &cancellable)
     }
 
     private func setupMap() {
         mapView = MKMapView()
         mapView?.delegate = self
+        mapView?.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: StopAnnotationView.description())
         guard let mapView = mapView else { return }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
@@ -185,12 +197,20 @@ extension HomeViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation,
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Annotation")
-            else { return nil }
-        annotationView.annotation = annotation
+        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
         annotationView.canShowCallout = true
+        annotationView.detailCalloutAccessoryView = StopDetailView()
+        if annotationView.isEqual(mapView.userLocation) {
+            return nil
+        }
         return annotationView
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let coordinate = view.annotation?.coordinate else { return }
+
+        selectedAnnotationView = view
+        viewModel.retrieveStopDetail(for: coordinate)
     }
 }
 
