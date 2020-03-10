@@ -65,12 +65,14 @@ final class HomeViewController: UIViewController {
         }).store(in: &cancellable)
 
         viewModel.$stopDetail.sink { [weak self] detail in
-            guard let selectedAnnotation = self?.selectedAnnotationView?.detailCalloutAccessoryView as? StopDetailView,
+            guard let selectedAnnotation = self?.selectedAnnotationView,
                 let detail = detail
                 else { return }
 
             DispatchQueue.main.async {
-                selectedAnnotation.configure(model: detail)
+                let stopView = StopDetailView()
+                stopView.configure(model: detail)
+                selectedAnnotation.detailCalloutAccessoryView = stopView
             }
         }.store(in: &cancellable)
     }
@@ -78,7 +80,6 @@ final class HomeViewController: UIViewController {
     private func setupMap() {
         mapView = MKMapView()
         mapView?.delegate = self
-        mapView?.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: StopAnnotationView.description())
         guard let mapView = mapView else { return }
         mapView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mapView)
@@ -182,7 +183,7 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         setMap(route: viewModel.route(forTrip: indexPath.row))
-        setMap(stops: viewModel.route(forTrip: indexPath.row))
+        setMap(stops: viewModel.stops(forTrip: indexPath.row))
     }
 }
 
@@ -197,12 +198,10 @@ extension HomeViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        let annotationView = MKMarkerAnnotationView()
+        annotationView.annotation = annotation
         annotationView.canShowCallout = true
-        annotationView.detailCalloutAccessoryView = StopDetailView()
-        if annotationView.isEqual(mapView.userLocation) {
-            return nil
-        }
+
         return annotationView
     }
 

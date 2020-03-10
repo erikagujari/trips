@@ -17,6 +17,7 @@ final class StopDetailView: UIView {
     private let userNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.textAlignment = .right
         label.font = .systemFont(ofSize: 15)
         return label
     }()
@@ -29,6 +30,7 @@ final class StopDetailView: UIView {
     private let priceAmountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.textAlignment = .right
         label.font = .systemFont(ofSize: 15)
         return label
     }()
@@ -41,6 +43,7 @@ final class StopDetailView: UIView {
     private let stopTimeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.textAlignment = .right
         label.font = .systemFont(ofSize: 15)
         return label
     }()
@@ -53,6 +56,7 @@ final class StopDetailView: UIView {
     private let paidValueLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.textAlignment = .right
         label.font = .systemFont(ofSize: 15)
         return label
     }()
@@ -65,6 +69,7 @@ final class StopDetailView: UIView {
     private let addressValueLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.textAlignment = .right
         label.font = .systemFont(ofSize: 15)
         return label
     }()
@@ -83,6 +88,7 @@ final class StopDetailView: UIView {
     private func setupLayout() {
         let contentStackView = UIStackView()
         contentStackView.axis = .vertical
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentStackView)
         NSLayoutConstraint.activate([contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
                                      contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -90,26 +96,31 @@ final class StopDetailView: UIView {
                                      contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor)])
         let nameStackView = UIStackView()
         nameStackView.axis = .horizontal
+        nameStackView.spacing = Constants.horizontalSpacing
         nameStackView.addArrangedSubview(userLabel)
         nameStackView.addArrangedSubview(userNameLabel)
 
         let priceStackView = UIStackView()
         priceStackView.axis = .horizontal
+        priceStackView.spacing = Constants.horizontalSpacing
         priceStackView.addArrangedSubview(priceLabel)
         priceStackView.addArrangedSubview(priceAmountLabel)
 
         let timeStackView = UIStackView()
         timeStackView.axis = .horizontal
+        timeStackView.spacing = Constants.horizontalSpacing
         timeStackView.addArrangedSubview(stopLabel)
         timeStackView.addArrangedSubview(stopTimeLabel)
 
         let paidStackView = UIStackView()
         paidStackView.axis = .horizontal
+        paidStackView.spacing = Constants.horizontalSpacing
         paidStackView.addArrangedSubview(paidLabel)
         paidStackView.addArrangedSubview(paidValueLabel)
 
         let addressStackView = UIStackView()
         addressStackView.axis = .horizontal
+        addressStackView.spacing = Constants.horizontalSpacing
         addressStackView.addArrangedSubview(addressLabel)
         addressStackView.addArrangedSubview(addressValueLabel)
 
@@ -129,11 +140,10 @@ extension StopDetailView {
         priceAmountLabel.text = model.price
         stopLabel.text = Titles.time
         stopTimeLabel.text = model.stopTime
-        priceLabel.text = Titles.price
-        priceAmountLabel.text = model.price
+        paidLabel.text = Titles.paid
+        paidValueLabel.text = model.paid
         addressLabel.text = Titles.address
         addressValueLabel.text = model.address
-        sizeToFit()
     }
 }
 
@@ -144,5 +154,9 @@ private extension StopDetailView {
         static let time = "Time:"
         static let paid = "Paid:"
         static let address = "Address:"
+    }
+
+    enum Constants {
+        static let horizontalSpacing: CGFloat = 5.0
     }
 }

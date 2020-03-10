@@ -9,7 +9,7 @@
 struct StopAnnotationMapper {
     func map(domain: StopDetail) -> StopAnnotationModel {
         return StopAnnotationModel(userName: domain.userName,
-                                   price: String(domain.price),
+                                   price: "\(String(domain.price))€",
                                    stopTime: domain.stopTime.toString(),
                                    paid: domain.paid ? "Yes" : "No",
                                    address: domain.address)
