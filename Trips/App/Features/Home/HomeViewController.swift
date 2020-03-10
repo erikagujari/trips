@@ -10,7 +10,7 @@ import MapKit
 import Combine
 
 final class HomeViewController: UIViewController {
-    private let viewModel: HomeViewModelProtocol = HomeViewModel()
+    private let viewModel: HomeViewModelProtocol
     private var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     private var mapView: MKMapView?
     private var tableView: UITableView?
@@ -18,6 +18,15 @@ final class HomeViewController: UIViewController {
     private var selectedAnnotationView: MKAnnotationView?
 
     //MARK: Lifecycle
+    init(viewModel: HomeViewModelProtocol = HomeViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -109,7 +118,7 @@ final class HomeViewController: UIViewController {
         guard let contactButton = contactButton else { return }
         contactButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contactButton)
-        //TODO: add asset
+        contactButton.setImage(#imageLiteral(resourceName: "message").resizeImage(toSize: Constants.pinImageSize), for: .normal)
         NSLayoutConstraint.activate([contactButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                                                                              constant: -Constants.defaultMargin),
                                      contactButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
