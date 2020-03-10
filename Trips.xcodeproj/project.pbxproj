@@ -10,6 +10,7 @@
 		5D903A1E8EE7D914EBDC8AEE /* Pods_Trips.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2CF199EF717972E2C7DB869 /* Pods_Trips.framework */; };
 		7745359BA9E06B8121C69375 /* Pods_TripsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDC46934630A31FDF39472D /* Pods_TripsTests.framework */; };
 		8201805A240BD5290080F811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82018059240BD5290080F811 /* LaunchScreen.storyboard */; };
+		821B2D5524178E5000D3D339 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B2D5424178E5000D3D339 /* UIImage+Resize.swift */; };
 		822497DE240F938700150B8D /* HomeCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497DD240F938700150B8D /* HomeCellModel.swift */; };
 		822497E1240FA94500150B8D /* HomeCellMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E0240FA94500150B8D /* HomeCellMapper.swift */; };
 		822497E3240FA98E00150B8D /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E2240FA98E00150B8D /* Date+String.swift */; };
@@ -62,6 +63,7 @@
 		253DC08495E0684B3461F4EB /* Pods-TripsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripsTests.debug.xcconfig"; path = "Target Support Files/Pods-TripsTests/Pods-TripsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		36DD8E2747F0D553ED4804CD /* Pods-TripsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripsTests.release.xcconfig"; path = "Target Support Files/Pods-TripsTests/Pods-TripsTests.release.xcconfig"; sourceTree = "<group>"; };
 		82018059240BD5290080F811 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		821B2D5424178E5000D3D339 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		822497DD240F938700150B8D /* HomeCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellModel.swift; sourceTree = "<group>"; };
 		822497E0240FA94500150B8D /* HomeCellMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellMapper.swift; sourceTree = "<group>"; };
 		822497E2240FA98E00150B8D /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				822497E2240FA98E00150B8D /* Date+String.swift */,
 				8245FA66240E865100CC9DB9 /* String+Date.swift */,
 				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
+				821B2D5424178E5000D3D339 /* UIImage+Resize.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				8224C8EC240C352A00DC43CD /* TripService.swift in Sources */,
 				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
 				822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */,
+				821B2D5524178E5000D3D339 /* UIImage+Resize.swift in Sources */,
 				8224C8EA240C34A600DC43CD /* Service.swift in Sources */,
 				8224C8EE240C36DA00DC43CD /* TripServiceProvider.swift in Sources */,
 				822855EE2412B8E200D34212 /* RetrieveStopDetailUseCase.swift in Sources */,

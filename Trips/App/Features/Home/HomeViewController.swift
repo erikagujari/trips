@@ -56,12 +56,10 @@ final class HomeViewController: UIViewController {
             isFetching ? self?.showSpinner() : self?.hideSpinner()
         }.store(in: &cancellable)
 
-        viewModel.$errorMessage.sink(receiveValue: { [weak self] message in
-            guard !message.isEmpty else { return }
+        viewModel.$error.sink(receiveValue: { [weak self] error in
+            guard let error = error else { return }
 
-            self?.showError(message: message, completion: {
-                self?.viewModel.retrieveTrips()
-            })
+            self?.showError(message: error.message, completion: error.action)
         }).store(in: &cancellable)
 
         viewModel.$stopDetail.sink { [weak self] detail in
@@ -118,16 +116,24 @@ final class HomeViewController: UIViewController {
                                                                         constant: Constants.defaultMargin)])
     }
 
-    private func setMap(route: [CLLocationCoordinate2D]) {
+    private func setMapPolyline(route: [CLLocationCoordinate2D]) {
         removeRoutes()
         let polyline = MKPolyline(coordinates: route, count: route.count)
         mapView?.addOverlay(polyline)
         centerMap(on: polyline)
     }
 
-    private func setMap(stops: [CLLocationCoordinate2D]) {
+    private func setMapAnnotations(stops: [CLLocationCoordinate2D], route: [CLLocationCoordinate2D]) {
         removeStops()
-        mapView?.addAnnotations(stops.map { stop -> MKAnnotation in
+        guard let first = route.first,
+            let last = route.last
+            else {
+                return
+        }
+        var annotations = stops
+        annotations.append(first)
+        annotations.append(last)
+        mapView?.addAnnotations(annotations.map { stop -> MKAnnotation in
             let annotation = MKPointAnnotation()
             annotation.coordinate = stop
             return annotation
@@ -182,8 +188,9 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setMap(route: viewModel.route(forTrip: indexPath.row))
-        setMap(stops: viewModel.stops(forTrip: indexPath.row))
+        let route = viewModel.route(forTrip: indexPath.row)
+        setMapPolyline(route: route)
+        setMapAnnotations(stops: viewModel.stops(forTrip: indexPath.row), route: route)
     }
 }
 
@@ -198,7 +205,14 @@ extension HomeViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let annotationView = MKMarkerAnnotationView()
+        let annotationView = MKPinAnnotationView()
+        if viewModel.isStart(coordinate: annotation.coordinate) {
+            annotationView.image = #imageLiteral(resourceName: "apin").resizeImage(toSize: Constants.pinImageSize)
+        } else if viewModel.isEnd(coordinate: annotation.coordinate) {
+            annotationView.image = #imageLiteral(resourceName: "bpin").resizeImage(toSize: Constants.pinImageSize)
+        } else {
+            annotationView.image = #imageLiteral(resourceName: "pin").resizeImage(toSize: Constants.pinImageSize)
+        }
         annotationView.annotation = annotation
         annotationView.canShowCallout = true
 
@@ -218,5 +232,6 @@ private extension HomeViewController {
         static let mapViewMultiplier: CGFloat = 0.6
         static let defaultMargin: CGFloat = 20
         static let polylineWidth: CGFloat = 3
+        static let pinImageSize: CGSize = CGSize(width: 40, height: 40)
     }
 }

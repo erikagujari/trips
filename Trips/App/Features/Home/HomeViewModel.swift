@@ -11,7 +11,7 @@ import CoreLocation
 class HomePublishedProperties {
     @Published var cellModels: [HomeCellModel] = []
     @Published var isFetching: Bool = false
-    @Published var errorMessage: String = ""
+    @Published var error: ErrorAction? = nil
     @Published var stopDetail: StopAnnotationModel?
 }
 
@@ -20,6 +20,8 @@ protocol HomeViewModelProtocol: HomePublishedProperties {
     func route(forTrip index: Int) -> [CLLocationCoordinate2D]
     func stops(forTrip index: Int) -> [CLLocationCoordinate2D]
     func retrieveStopDetail(for coordinate: CLLocationCoordinate2D)
+    func isStart(coordinate: CLLocationCoordinate2D) -> Bool
+    func isEnd(coordinate: CLLocationCoordinate2D) -> Bool
 }
 
 protocol HomeViewModelDependenciesProtocol {
@@ -54,9 +56,12 @@ extension HomeViewModel: HomeViewModelProtocol {
         dependencies.tripsUseCase.trips
         .sink(receiveCompletion: { [weak self] event in
             switch event {
-            case .finished: break
+            case .finished:
+                self?.isFetching = false
             case .failure(let error):
-                self?.errorMessage = error.message
+                self?.error = ErrorAction(message: error.message, action: {
+                    self?.retrieveTrips()
+                })
                 self?.isFetching = false
             }
         }) { [weak self] trips in
@@ -100,7 +105,7 @@ extension HomeViewModel: HomeViewModelProtocol {
                 case .finished: break
                 case .failure(let error):
                     self?.stopDetail = nil
-                    self?.errorMessage = error.message
+                    self?.error = ErrorAction(message: error.message)
                     self?.isFetching = false
                 }
             }) { [weak self] detail in
@@ -108,5 +113,25 @@ extension HomeViewModel: HomeViewModelProtocol {
                 self?.isFetching = false
         }
         .store(in: &dependencies.cancellable)
+    }
+
+    func isStart(coordinate: CLLocationCoordinate2D) -> Bool {
+        guard let selectedTrip = selectedTrip,
+            trips.indices.contains(selectedTrip),
+            let first = trips[selectedTrip].route.first
+            else {
+                return false
+        }
+        return first == coordinate
+    }
+
+    func isEnd(coordinate: CLLocationCoordinate2D) -> Bool {
+        guard let selectedTrip = selectedTrip,
+            trips.indices.contains(selectedTrip),
+            let first = trips[selectedTrip].route.last
+            else {
+                return false
+        }
+        return first == coordinate
     }
 }

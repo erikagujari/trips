@@ -8,6 +8,16 @@
 
 import UIKit
 
+struct ErrorAction {
+    let message: String
+    let action: (() -> ())?
+
+    init(message: String, action: (() -> ())? = nil) {
+        self.message = message
+        self.action = action
+    }
+}
+
 final class SpinnerView: UIView { }
 
 protocol SpinnerProtocol {
