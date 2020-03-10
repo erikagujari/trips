@@ -78,16 +78,7 @@ final class HomeTableViewCell: UITableViewCell {
         let contentStackView = UIStackView()
         contentStackView.axis = .vertical
         contentStackView.spacing = Constants.verticalSpacing
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(contentStackView)
-        NSLayoutConstraint.activate([contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                                                               constant: Constants.horizontalSpacing),
-                                     contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                                                constant: -Constants.horizontalSpacing),
-                                     contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                                                           constant: Constants.verticalSpacing),
-                                     contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                                                              constant: -Constants.verticalSpacing)])
+        contentStackView.adjust(to: contentView)
 
         let driverStackView = UIStackView()
         driverStackView.axis = .horizontal

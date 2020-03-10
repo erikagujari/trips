@@ -88,12 +88,7 @@ final class StopDetailView: UIView {
     private func setupLayout() {
         let contentStackView = UIStackView()
         contentStackView.axis = .vertical
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(contentStackView)
-        NSLayoutConstraint.activate([contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                     contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     contentStackView.topAnchor.constraint(equalTo: topAnchor),
-                                     contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+        contentStackView.adjust(to: self)
         let nameStackView = UIStackView()
         nameStackView.axis = .horizontal
         nameStackView.spacing = Constants.horizontalSpacing

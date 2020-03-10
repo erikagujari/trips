@@ -88,13 +88,9 @@ final class HomeViewController: UIViewController {
         mapView = MKMapView()
         mapView?.delegate = self
         guard let mapView = mapView else { return }
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(mapView)
-        NSLayoutConstraint.activate([mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                                     mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                     mapView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor,
-                                                                     multiplier: Constants.mapViewMultiplier)])
+        mapView.adjust(to: view,
+                       bottom: -view.frame.height * Constants.mapViewMultiplier,
+                       safeArealayoutGuide: true)
     }
 
     private func setupTableView() {
@@ -105,12 +101,9 @@ final class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.description())
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
-        NSLayoutConstraint.activate([tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                                     tableView.topAnchor.constraint(equalTo: mapView.bottomAnchor),
-                                     tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)])
+        tableView.adjust(to: view,
+                         topConstraint: mapView.bottomAnchor,
+                         safeArealayoutGuide: true)
     }
 
     private func setupContactButton() {
@@ -118,6 +111,7 @@ final class HomeViewController: UIViewController {
         guard let contactButton = contactButton else { return }
         contactButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contactButton)
+        contactButton.addTarget(self, action: #selector(contactButtonTapped), for: .touchUpInside)
         contactButton.setImage(#imageLiteral(resourceName: "message").resizeImage(toSize: Constants.pinImageSize), for: .normal)
         NSLayoutConstraint.activate([contactButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                                                                              constant: -Constants.defaultMargin),
@@ -175,6 +169,10 @@ final class HomeViewController: UIViewController {
             return
         }
         mapView?.removeAnnotations(annotations)
+    }
+
+    @objc private func contactButtonTapped() {
+        navigationController?.pushViewController(ContactViewController(), animated: true)
     }
 }
 
@@ -238,7 +236,8 @@ extension HomeViewController: MKMapViewDelegate {
 
 private extension HomeViewController {
     enum Constants {
-        static let mapViewMultiplier: CGFloat = 0.6
+        static let mapViewMultiplier: CGFloat = 0.4
+        static let tableViewMultiplier: CGFloat = 0.6
         static let defaultMargin: CGFloat = 20
         static let polylineWidth: CGFloat = 3
         static let pinImageSize: CGSize = CGSize(width: 40, height: 40)

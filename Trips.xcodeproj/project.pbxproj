@@ -11,6 +11,10 @@
 		7745359BA9E06B8121C69375 /* Pods_TripsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EDC46934630A31FDF39472D /* Pods_TripsTests.framework */; };
 		8201805A240BD5290080F811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82018059240BD5290080F811 /* LaunchScreen.storyboard */; };
 		821B2D5524178E5000D3D339 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B2D5424178E5000D3D339 /* UIImage+Resize.swift */; };
+		821B2D582417A92B00D3D339 /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B2D572417A92B00D3D339 /* ContactViewController.swift */; };
+		821B2D5A2417AA9D00D3D339 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B2D592417AA9D00D3D339 /* ContactViewModel.swift */; };
+		821B2D5C2417ABC800D3D339 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B2D5B2417ABC800D3D339 /* UIView+Constraints.swift */; };
+		821B2D602417F31900D3D339 /* ContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 821B2D5F2417F31900D3D339 /* ContactViewController.xib */; };
 		822497DE240F938700150B8D /* HomeCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497DD240F938700150B8D /* HomeCellModel.swift */; };
 		822497E1240FA94500150B8D /* HomeCellMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E0240FA94500150B8D /* HomeCellMapper.swift */; };
 		822497E3240FA98E00150B8D /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822497E2240FA98E00150B8D /* Date+String.swift */; };
@@ -33,6 +37,7 @@
 		822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855F72412BF3900D34212 /* StopAnnotationModel.swift */; };
 		822855FA2412C46000D34212 /* StopAnnotationMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855F92412C46000D34212 /* StopAnnotationMapper.swift */; };
 		822855FC2412C8FC00D34212 /* StopDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822855FB2412C8FC00D34212 /* StopDetailView.swift */; };
+		822B3554241857BF00FCA359 /* UITextField+ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B3553241857BF00FCA359 /* UITextField+ToolBar.swift */; };
 		8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */; };
 		8245FA5B240E611400CC9DB9 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5A240E611400CC9DB9 /* Trip.swift */; };
 		8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */; };
@@ -40,6 +45,7 @@
 		8245FA62240E654C00CC9DB9 /* PointResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */; };
 		8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */; };
 		8245FA67240E865100CC9DB9 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8245FA66240E865100CC9DB9 /* String+Date.swift */; };
+		824FAB8324180CD500EE8B91 /* UITextView+ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FAB8224180CD500EE8B91 /* UITextView+ToolBar.swift */; };
 		8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A620240BC9480043D6C7 /* AppDelegate.swift */; };
 		8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A622240BC9480043D6C7 /* SceneDelegate.swift */; };
 		8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A624240BC9480043D6C7 /* HomeViewController.swift */; };
@@ -64,6 +70,10 @@
 		36DD8E2747F0D553ED4804CD /* Pods-TripsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripsTests.release.xcconfig"; path = "Target Support Files/Pods-TripsTests/Pods-TripsTests.release.xcconfig"; sourceTree = "<group>"; };
 		82018059240BD5290080F811 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		821B2D5424178E5000D3D339 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		821B2D572417A92B00D3D339 /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
+		821B2D592417AA9D00D3D339 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
+		821B2D5B2417ABC800D3D339 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		821B2D5F2417F31900D3D339 /* ContactViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactViewController.xib; sourceTree = "<group>"; };
 		822497DD240F938700150B8D /* HomeCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellModel.swift; sourceTree = "<group>"; };
 		822497E0240FA94500150B8D /* HomeCellMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellMapper.swift; sourceTree = "<group>"; };
 		822497E2240FA98E00150B8D /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
@@ -86,6 +96,7 @@
 		822855F72412BF3900D34212 /* StopAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotationModel.swift; sourceTree = "<group>"; };
 		822855F92412C46000D34212 /* StopAnnotationMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotationMapper.swift; sourceTree = "<group>"; };
 		822855FB2412C8FC00D34212 /* StopDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopDetailView.swift; sourceTree = "<group>"; };
+		822B3553241857BF00FCA359 /* UITextField+ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+ToolBar.swift"; sourceTree = "<group>"; };
 		8245FA57240E601800CC9DB9 /* RetrieveTripsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveTripsUseCase.swift; sourceTree = "<group>"; };
 		8245FA5A240E611400CC9DB9 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		8245FA5D240E618A00CC9DB9 /* TripResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponseMapper.swift; sourceTree = "<group>"; };
@@ -93,6 +104,7 @@
 		8245FA61240E654C00CC9DB9 /* PointResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointResponseMapper.swift; sourceTree = "<group>"; };
 		8245FA63240E673F00CC9DB9 /* StopResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopResponseMapper.swift; sourceTree = "<group>"; };
 		8245FA66240E865100CC9DB9 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
+		824FAB8224180CD500EE8B91 /* UITextView+ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+ToolBar.swift"; sourceTree = "<group>"; };
 		8299A61D240BC9480043D6C7 /* Trips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A620240BC9480043D6C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8299A622240BC9480043D6C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +160,16 @@
 				36DD8E2747F0D553ED4804CD /* Pods-TripsTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		821B2D562417A8AE00D3D339 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				821B2D572417A92B00D3D339 /* ContactViewController.swift */,
+				821B2D592417AA9D00D3D339 /* ContactViewModel.swift */,
+				821B2D5F2417F31900D3D339 /* ContactViewController.xib */,
+			);
+			path = Contact;
 			sourceTree = "<group>";
 		};
 		822497DB240F935000150B8D /* Cells */ = {
@@ -306,8 +328,11 @@
 				822855EB2412B64500D34212 /* CLLocationCoordinate2D+Equatable.swift */,
 				822497E2240FA98E00150B8D /* Date+String.swift */,
 				8245FA66240E865100CC9DB9 /* String+Date.swift */,
-				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
 				821B2D5424178E5000D3D339 /* UIImage+Resize.swift */,
+				824FAB8224180CD500EE8B91 /* UITextView+ToolBar.swift */,
+				821B2D5B2417ABC800D3D339 /* UIView+Constraints.swift */,
+				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
+				822B3553241857BF00FCA359 /* UITextField+ToolBar.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -363,6 +388,7 @@
 		8299A647240BCDD90043D6C7 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				821B2D562417A8AE00D3D339 /* Contact */,
 				8224C8F6240C3B5900DC43CD /* Home */,
 			);
 			path = Features;
@@ -453,6 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8201805A240BD5290080F811 /* LaunchScreen.storyboard in Resources */,
+				821B2D602417F31900D3D339 /* ContactViewController.xib in Resources */,
 				8299A62D240BC94A0043D6C7 /* Assets.xcassets in Resources */,
 				8299A646240BCBEC0043D6C7 /* Default-568h@2x.png in Resources */,
 			);
@@ -556,11 +583,16 @@
 				822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */,
 				821B2D5524178E5000D3D339 /* UIImage+Resize.swift in Sources */,
 				8224C8EA240C34A600DC43CD /* Service.swift in Sources */,
+				824FAB8324180CD500EE8B91 /* UITextView+ToolBar.swift in Sources */,
 				8224C8EE240C36DA00DC43CD /* TripServiceProvider.swift in Sources */,
 				822855EE2412B8E200D34212 /* RetrieveStopDetailUseCase.swift in Sources */,
+				821B2D5C2417ABC800D3D339 /* UIView+Constraints.swift in Sources */,
+				821B2D582417A92B00D3D339 /* ContactViewController.swift in Sources */,
 				8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */,
 				8245FA58240E601800CC9DB9 /* RetrieveTripsUseCase.swift in Sources */,
 				8224C8F0240C371700DC43CD /* TripError.swift in Sources */,
+				821B2D5A2417AA9D00D3D339 /* ContactViewModel.swift in Sources */,
+				822B3554241857BF00FCA359 /* UITextField+ToolBar.swift in Sources */,
 				8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */,
 				822855F02412B99000D34212 /* StopDetail.swift in Sources */,
 				8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */,
