@@ -8,12 +8,33 @@
 
 import Combine
 import Foundation
+import CoreLocation
 @testable import Trips
 
 final class MockHomeViewModelDependencies: HomeViewModelDependenciesProtocol {
+    var stopUseCase: RetrieveStopDetailUseCaseProtocol = MockRetrieveStopDetailUseCase()
+    var cellMapper: HomeCellMapper = HomeCellMapper()
+    var annotationMapper: StopAnnotationMapper = StopAnnotationMapper()
     var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     var tripsUseCase: RetrieveTripsUseCaseProtocol = MockRetrieveTripsUseCase()
     var mapper: HomeCellMapper = HomeCellMapper()
+}
+
+final class MockRetrieveStopDetailUseCase: RetrieveStopDetailUseCaseProtocol {
+    func fetchStopDetail(id: Int) -> AnyPublisher<StopDetail, TripError> {
+        return Future { promise in
+            if id == 0 {
+                promise(.success(StopDetail(userName: "",
+                                            price: 0,
+                                            stopTime: Date(),
+                                            paid: false,
+                                            address: "")))
+            } else {
+                promise(.failure(TripError.serviceError))
+            }
+        }
+    .eraseToAnyPublisher()
+    }
 }
 
 final class MockRetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
@@ -22,7 +43,9 @@ final class MockRetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
             promise(.success([Trip(origin: Destination(address: "MockAddress1",
                                                        point: Point(latitude: 0,
                                                                     longitude: 0)),
-                                   stops: [],
+                                   stops: [Stop(point: Point(latitude: 0,
+                                                             longitude: 0),
+                                                id: 0)],
                                    destination: Destination(address: "MockAddress1",
                                                             point: Point(latitude: 0,
                                                                          longitude: 0)),
@@ -30,7 +53,12 @@ final class MockRetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
                                    startTime: Date(),
                                    description: "",
                                    driverName: "MockDriver1",
-                                   route: [],
+                                   route: [CLLocationCoordinate2D(latitude: 1,
+                                                                  longitude: 1),
+                                           CLLocationCoordinate2D(latitude: 2,
+                                                                  longitude: 2),
+                                           CLLocationCoordinate2D(latitude: 3,
+                                                                  longitude: 3)],
                                    status: "")]))
         }
         .eraseToAnyPublisher()
