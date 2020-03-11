@@ -43,7 +43,7 @@ struct HomeViewModelDependencies: HomeViewModelDependenciesProtocol {
 final class HomeViewModel: HomePublishedProperties {
     private var trips: [Trip] = []
     private var selectedTrip: Int?
-    var dependencies: HomeViewModelDependenciesProtocol
+    private var dependencies: HomeViewModelDependenciesProtocol
 
     init(dependencies: HomeViewModelDependenciesProtocol = HomeViewModelDependencies()) {
         self.dependencies = dependencies

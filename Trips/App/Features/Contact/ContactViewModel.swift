@@ -15,7 +15,23 @@ protocol ContactViewModelProtocol: ContactPublishedProperties {
     func submitForm(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?)
 }
 
+protocol ContactViewModelDependenciesProtocol {
+    var cancellable: Set<AnyCancellable> { get set }
+    var saveFormUseCase: SaveFormUseCaseProtocol { get }
+}
+
+struct ContactViewModelDependencies: ContactViewModelDependenciesProtocol {
+    var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
+    var saveFormUseCase: SaveFormUseCaseProtocol = SaveFormUseCase()
+}
+
 final class ContactViewModel: ContactPublishedProperties {
+    private var dependencies: ContactViewModelDependenciesProtocol
+
+    init(dependencies: ContactViewModelDependenciesProtocol = ContactViewModelDependencies()) {
+        self.dependencies = dependencies
+    }
+
     private func formIsValid(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?) -> Bool {
         guard let name = name,
             !name.isEmpty,
@@ -32,25 +48,51 @@ final class ContactViewModel: ContactPublishedProperties {
         }
         return true
     }
+
+    private func saveForm(name: String, surname: String, email: String, phone: String, date: String, description: String) {
+        dependencies.saveFormUseCase.save(name: name,
+                                          surname: surname,
+                                          email: email,
+                                          phone: phone,
+                                          date: date,
+                                          description: description)
+            .sink(receiveCompletion: { [weak self] event in
+                switch event {
+                case .finished:
+                    self?.errorMessage = Titles.saveSucceed
+                case .failure(let error):
+                    self?.errorMessage = error.message
+                }
+                }, receiveValue: { _ in })
+            .store(in: &dependencies.cancellable)
+    }
 }
 
 extension ContactViewModel: ContactViewModelProtocol {
     func submitForm(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?) {
         guard formIsValid(name: name,
-                    surname: surname,
-                    email: email,
-                    phone: phone,
-                    date: date,
-                    description: description)
+                          surname: surname,
+                          email: email,
+                          phone: phone,
+                          date: date,
+                          description: description)
             else {
                 self.errorMessage = Titles.form
                 return
         }
+
+        saveForm(name: name ?? "",
+                 surname: surname ?? "",
+                 email: email ?? "",
+                 phone: phone ?? "",
+                 date: date ?? "",
+                 description: description ?? "")
     }
 }
 
 private extension ContactViewModel {
     enum Titles {
         static let form = "Check your data please :)"
+        static let saveSucceed = "Your request has been processed successfully"
     }
 }

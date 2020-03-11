@@ -102,6 +102,7 @@ final class ContactViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
+        submitButton.setTitle(Titles.submit, for: .normal)
         nameTextfied.delegate = self
         surnameTextfield.delegate = self
         emailTextfield.delegate = self

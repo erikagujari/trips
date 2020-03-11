@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 protocol CoreDataManagerProtocol {
-    var storedForms: AnyPublisher<[FormData], TripError> { get }
+    var storedFormsCount: AnyPublisher<Int, TripError> { get }
     func save(form: FormData) -> Future<Void, TripError>
 }
 
@@ -28,17 +28,15 @@ final class CoreDataManager {
 }
 
 extension CoreDataManager: CoreDataManagerProtocol {
-    var storedForms: AnyPublisher<[FormData], TripError> {
+    var storedFormsCount: AnyPublisher<Int, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
-            guard let list = try? self?.viewContext?.fetch(fetchRequest),
-                let formList = list as? [FormData]
+            guard let list = try? self?.viewContext?.fetch(fetchRequest)
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
             }
-
-            return promise(.success(formList))
+            return promise(.success(list.count))
         }
     .eraseToAnyPublisher()
     }
@@ -83,6 +81,6 @@ private extension CoreDataManager {
         static let email = "email"
         static let phone = "phone"
         static let date = "date"
-        static let description = "description"
+        static let description = "formDescription"
     }
 }

@@ -7,33 +7,28 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "534252AE-8E49-4A22-BC93-ADBFC7970695"
+            uuid = "7CB15F61-538B-4042-93A1-BD84BA443AC9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Trips/App/Features/Home/HomeViewModel.swift"
+            filePath = "Trips/App/Features/Home/Views/StopAnnotationView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "retrieveTrips()"
-            landmarkType = "7">
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "annotation"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "FB7E9C10-193D-49FC-AE79-B60EBC5C2F33"
+            uuid = "CDC2A371-1798-4E47-A68D-60A7FFCB5D2C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Trips/App/Features/Home/HomeViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "retrieveTrips()"
-            landmarkType = "7">
+            scope = "1"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
