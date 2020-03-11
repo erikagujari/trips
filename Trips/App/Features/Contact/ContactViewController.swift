@@ -124,7 +124,14 @@ final class ContactViewController: UIViewController {
         viewModel.$errorMessage.sink { [weak self] message in
             guard let message = message else { return }
 
-            self?.showError(message: message)
+            self?.showAlert(message: message)
+        }.store(in: &cancellable)
+
+        viewModel.$successMessage.sink { [weak self] message in
+            guard let message = message else { return }
+
+            self?.showAlert(title: Titles.success,
+                            message: message)
         }.store(in: &cancellable)
     }
 }
@@ -165,6 +172,7 @@ private extension ContactViewController {
         static let date = "Date"
         static let description = "Your observations"
         static let submit = "Submit"
+        static let success = "Success"
     }
 
     enum Constants {

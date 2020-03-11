@@ -23,12 +23,12 @@ final class SpinnerView: UIView { }
 protocol SpinnerProtocol {
     func showSpinner()
     func hideSpinner()
-    func showError(message: String, completion: (() -> Void)?)
+    func showAlert(title: String, message: String, completion: (() -> Void)?)
 }
 
 extension SpinnerProtocol {
-    func showError(message: String, completion: (() -> Void)? = nil) {
-        return showError(message: message, completion: completion)
+    func showAlert(title: String = "Oops", message: String, completion: (() -> Void)? = nil) {
+        return
     }
 }
 
@@ -52,18 +52,17 @@ extension UIViewController: SpinnerProtocol {
         }
     }
 
-    func showError(message: String, completion: (() -> Void)? = nil) {
+    func showAlert(title: String = "Oops", message: String, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
                 self?.dismiss(animated: true)
                 completion?()
             }
-            let alertController = UIAlertController(title: "Oops!",
+            let alertController = UIAlertController(title: title,
                                                     message: message,
                                                     preferredStyle: .alert)
             alertController.addAction(okAction)
             self?.present(alertController, animated: true)
         }
-
     }
 }

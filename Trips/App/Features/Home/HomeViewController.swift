@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
         viewModel.$error.sink(receiveValue: { [weak self] error in
             guard let error = error else { return }
 
-            self?.showError(message: error.message, completion: error.action)
+            self?.showAlert(message: error.message, completion: error.action)
         }).store(in: &cancellable)
 
         viewModel.$stopDetail.sink { [weak self] detail in

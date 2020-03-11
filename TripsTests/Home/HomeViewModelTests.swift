@@ -11,7 +11,7 @@ import CoreLocation
 @testable import Trips
 
 final class HomeViewModelTests: XCTestCase {
-    private var sut: HomeViewModelProtocol! = nil
+    private var sut: HomeViewModelProtocol!
 
     override func setUp() {
         super.setUp()

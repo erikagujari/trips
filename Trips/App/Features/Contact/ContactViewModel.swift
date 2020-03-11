@@ -9,6 +9,7 @@ import Combine
 
 class ContactPublishedProperties {
     @Published var errorMessage: String? = nil
+    @Published var successMessage: String? = nil
 }
 
 protocol ContactViewModelProtocol: ContactPublishedProperties {
@@ -59,7 +60,7 @@ final class ContactViewModel: ContactPublishedProperties {
             .sink(receiveCompletion: { [weak self] event in
                 switch event {
                 case .finished:
-                    self?.errorMessage = Titles.saveSucceed
+                    self?.successMessage = Titles.saveSucceed
                 case .failure(let error):
                     self?.errorMessage = error.message
                 }
