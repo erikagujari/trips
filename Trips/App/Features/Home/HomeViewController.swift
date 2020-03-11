@@ -43,6 +43,7 @@ final class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        cancellable = Set<AnyCancellable>()
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
 

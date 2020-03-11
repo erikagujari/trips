@@ -5,6 +5,7 @@
 //  Created by AGUJARI Erik on 10/03/2020.
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
+import Combine
 import UIKit
 
 final class ContactViewController: UIViewController {
@@ -13,6 +14,9 @@ final class ContactViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
 
     private let viewModel: ContactViewModelProtocol
+    private var cancellable = Set<AnyCancellable>()
+    private var activeView: UIView? = nil
+
     private let nameTextfied: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
@@ -56,7 +60,6 @@ final class ContactViewController: UIViewController {
         textView.isScrollEnabled = false
         return textView
     }()
-    private var activeView: UIView? = nil
 
     //MARK: Lifecycle
     init(viewModel: ContactViewModelProtocol = ContactViewModel()) {
@@ -72,6 +75,7 @@ final class ContactViewController: UIViewController {
         super.viewDidLoad()
         title = Titles.screen
         setupUI()
+        setupBinding()
     }
 
     //MARK: Private
@@ -113,6 +117,14 @@ final class ContactViewController: UIViewController {
         stackView.addArrangedSubview(descriptionTextView)
         descriptionTextView.addDoneButton(title: "Ok", target: self, selector: #selector(doneTapped))
         dateTextfield.setInputViewDatePicker(target: self, selector: #selector(datePicked))
+    }
+
+    private func setupBinding() {
+        viewModel.$errorMessage.sink { [weak self] message in
+            guard let message = message else { return }
+
+            self?.showError(message: message)
+        }.store(in: &cancellable)
     }
 }
 
