@@ -7,7 +7,7 @@
 //
 
 enum TripError: Error {
-    case serviceError, parsingError
+    case serviceError, parsingError, persistenceError
 
     var message: String {
         switch self {
@@ -15,6 +15,8 @@ enum TripError: Error {
             return "We had an error, you should try again"
         case .parsingError:
             return "Sorry, data corrupted :("
+        case .persistenceError:
+            return "Could not store your data :("
         }
     }
 }
