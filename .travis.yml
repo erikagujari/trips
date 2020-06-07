@@ -1,0 +1,4 @@
+os: osx
+osx_image: xcode11.1
+language: swift
+script: xcodebuild clean build test -workspace Trips/Trips.xcworkspace -scheme "CI" -sdk iphonesimulator -destination "platform=iOS Simulator,OS=13.1,name=iPhone 11" CODE_SIGNING_REQUIRED=NO
