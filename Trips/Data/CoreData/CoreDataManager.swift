@@ -9,7 +9,7 @@ import Combine
 import CoreData
 import UIKit
 
-protocol CoreDataManagerProtocol {
+protocol SaverProtocol {
     var storedFormsCount: AnyPublisher<Int, TripError> { get }
     func save(form: FormData) -> Future<Void, TripError>
 }
@@ -27,7 +27,7 @@ final class CoreDataManager {
     }
 }
 
-extension CoreDataManager: CoreDataManagerProtocol {
+extension CoreDataManager: SaverProtocol {
     var storedFormsCount: AnyPublisher<Int, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)

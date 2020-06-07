@@ -9,11 +9,11 @@ import Combine
 import UIKit
 
 protocol SaveFormUseCaseDependenciesProtocol {
-    var coreDataManager: CoreDataManagerProtocol { get }
+    var saver: SaverProtocol { get }
 }
 
 struct SaveFormUseCaseDependencies: SaveFormUseCaseDependenciesProtocol {
-    var coreDataManager: CoreDataManagerProtocol = CoreDataManager.shared
+    var saver: SaverProtocol = CoreDataManager.shared
 }
 
 protocol SaveFormUseCaseProtocol {
@@ -39,14 +39,14 @@ struct SaveFormUseCase: SaveFormUseCaseProtocol {
     }
 
     func save(name: String, surname: String, email: String, phone: String, date: String, description: String) -> AnyPublisher<Void, TripError> {
-        return dependencies.coreDataManager.save(form: FormData(name: name,
+        return dependencies.saver.save(form: FormData(name: name,
                                                                 surname: surname,
                                                                 email: email,
                                                                 phone: phone,
                                                                 date: date,
                                                                 description: description))
             .flatMap { _ -> AnyPublisher<Void, TripError> in
-                return self.dependencies.coreDataManager.storedFormsCount
+                return self.dependencies.saver.storedFormsCount
                     .map { count -> Void in
                         self.updateBadgeNumber(number: count)
                         return ()
