@@ -1,4 +1,6 @@
 # Trips
+[![Build Status](https://travis-ci.com/erikagujari1/trips.svg?branch=master)](https://travis-ci.com/erikagujari1/trips)
+
 ## Architecture
 It is developed under MVVM pattern with use cases and repositories for Domaind an Data layers.
 
