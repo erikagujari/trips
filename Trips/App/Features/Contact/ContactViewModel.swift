@@ -33,7 +33,7 @@ final class ContactViewModel: ContactPublishedProperties {
         self.dependencies = dependencies
     }
 
-    private func formIsValid(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?) -> Bool {
+    private func formIsValid(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?) -> FormModel? {
         guard let name = name,
             !name.isEmpty,
             let surname = surname,
@@ -45,18 +45,17 @@ final class ContactViewModel: ContactPublishedProperties {
             let description = description,
             !description.isEmpty
             else {
-                return false
+                return nil
         }
-        return true
+        return FormModel(name: name,
+                         surname: surname,
+                         email: email, phone: phone,
+                         date: date,
+                         description: description)
     }
 
-    private func saveForm(name: String, surname: String, email: String, phone: String, date: String, description: String) {
-        dependencies.saveFormUseCase.save(name: name,
-                                          surname: surname,
-                                          email: email,
-                                          phone: phone,
-                                          date: date,
-                                          description: description)
+    private func saveForm(form: FormModel) {
+        dependencies.saveFormUseCase.save(formModel: form)
             .sink(receiveCompletion: { [weak self] event in
                 switch event {
                 case .finished:
@@ -71,23 +70,18 @@ final class ContactViewModel: ContactPublishedProperties {
 
 extension ContactViewModel: ContactViewModelProtocol {
     func submitForm(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?) {
-        guard formIsValid(name: name,
-                          surname: surname,
-                          email: email,
-                          phone: phone,
-                          date: date,
-                          description: description)
+        guard let form = formIsValid(name: name,
+                                     surname: surname,
+                                     email: email,
+                                     phone: phone,
+                                     date: date,
+                                     description: description)
             else {
                 self.errorMessage = Titles.form
                 return
         }
 
-        saveForm(name: name ?? "",
-                 surname: surname ?? "",
-                 email: email ?? "",
-                 phone: phone ?? "",
-                 date: date ?? "",
-                 description: description ?? "")
+        saveForm(form: form)
     }
 }
 

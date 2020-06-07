@@ -10,23 +10,25 @@ import UIKit
 
 protocol SaveFormUseCaseDependenciesProtocol {
     var saver: SaverProtocol { get }
+    var formDataMapper: FormDataMapper { get }
 }
 
 struct SaveFormUseCaseDependencies: SaveFormUseCaseDependenciesProtocol {
     var saver: SaverProtocol = CoreDataManager.shared
+    var formDataMapper: FormDataMapper = FormDataMapper()
 }
 
 protocol SaveFormUseCaseProtocol {
-    func save(name: String, surname: String, email: String, phone: String, date: String, description: String) -> AnyPublisher<Void, TripError>
+    func save(formModel: FormModel) -> AnyPublisher<Void, TripError>
 }
 
 struct SaveFormUseCase: SaveFormUseCaseProtocol {
     private let dependencies: SaveFormUseCaseDependenciesProtocol
-
+    
     init(dependencies: SaveFormUseCaseDependenciesProtocol = SaveFormUseCaseDependencies()) {
         self.dependencies = dependencies
     }
-
+    
     private func updateBadgeNumber(number: Int) {
         UNUserNotificationCenter.current().requestAuthorization(options: .badge) { (granted, error) in
             guard error == nil,
@@ -37,22 +39,17 @@ struct SaveFormUseCase: SaveFormUseCaseProtocol {
             }
         }
     }
-
-    func save(name: String, surname: String, email: String, phone: String, date: String, description: String) -> AnyPublisher<Void, TripError> {
-        return dependencies.saver.save(form: FormData(name: name,
-                                                                surname: surname,
-                                                                email: email,
-                                                                phone: phone,
-                                                                date: date,
-                                                                description: description))
+    
+    func save(formModel: FormModel) -> AnyPublisher<Void, TripError> {
+        return dependencies.saver.save(form: dependencies.formDataMapper.map(from: formModel))
             .flatMap { _ -> AnyPublisher<Void, TripError> in
                 return self.dependencies.saver.storedFormsCount
                     .map { count -> Void in
                         self.updateBadgeNumber(number: count)
                         return ()
                 }
-            .eraseToAnyPublisher()
-            }
+                .eraseToAnyPublisher()
+        }
         .eraseToAnyPublisher()
     }
 }

@@ -10,55 +10,89 @@ import XCTest
 @testable import Trips
 
 final class ContactViewModelTests: XCTestCase {
-    private var sut: ContactViewModelProtocol!
-
-    override func setUp() {
-        super.setUp()
-        sut = ContactViewModel(dependencies: ContactViewModelDependencies())
+    func test_validFormWithFilledPhone_endsWithSuccess() {
+        let sut = makeSut()
+        let form = validForm(phone: "611444333")
+        
+        expect(sut: sut, form: form, isValid: true)
     }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
+    
+    func test_validFormWithNilPhone_endsWithSuccess() {
+        let sut = makeSut()
+        let form = validForm(phone: nil)
+        
+        expect(sut: sut, form: form, isValid: true)
     }
-
-    func testFormSucess() {
-        XCTAssert(sut.errorMessage == nil)
-        sut.submitForm(name: "Bob",
-                       surname: "Dylan",
-                       email: "BobDylan@gmail.com",
-                       phone: "",
-                       date: "2020-03-10",
-                       description: "Test1")
-        XCTAssert(sut.errorMessage == nil)
-        XCTAssert(sut.successMessage != nil)
-        sut.submitForm(name: "Bob",
-        surname: "Dylan",
-        email: "BobDylan@gmail.com",
-        phone: "611111111",
-        date: "2020-03-10",
-        description: "Test1")
-        XCTAssert(sut.errorMessage == nil)
-        XCTAssert(sut.successMessage != nil)
+    
+    func test_validFormWithEmptyPhone_endsWithSuccess() {
+        let sut = makeSut()
+        let form = validForm(phone: "")
+        
+        expect(sut: sut, form: form, isValid: true)
     }
+    
+    func test_invalidFormWithEmptyName_endsWithError() {
+        let sut = makeSut()
+        let form = invalidForm(name: "")
+        
+        expect(sut: sut, form: form, isValid: false)
+    }
+    
+    func test_invalidFormWithEmptySurname_endsWithError() {
+        let sut = makeSut()
+        let form = invalidForm(surname: "")
+        
+        expect(sut: sut, form: form, isValid: false)
+    }
+    
+    func test_invalidFormWithEmptyDate_endsWithError() {
+        let sut = makeSut()
+        let form = invalidForm(date: "")
+        
+        expect(sut: sut, form: form, isValid: false)
+    }
+    
+    func test_invalidFormWithEmptyDescription_endsWithError() {
+        let sut = makeSut()
+        let form = invalidForm(description: "")
+        
+        expect(sut: sut, form: form, isValid: false)
+    }
+}
 
-    func testFormFails() {
-        XCTAssert(sut.errorMessage == nil)
-        sut.submitForm(name: "Bob",
-                       surname: "Dylan",
-                       email: "BobDylan@gmail.com",
-                       phone: "",
-                       date: "2020-03-10",
-                       description: "")
-        XCTAssert(sut.errorMessage != nil)
-        XCTAssert(sut.successMessage == nil)
-        sut.submitForm(name: "",
-        surname: "Dylan",
-        email: "BobDylan@gmail.com",
-        phone: "611111111",
-        date: "2020-03-10",
-        description: "Test1")
-        XCTAssert(sut.errorMessage != nil)
-        XCTAssert(sut.successMessage == nil)
+//MARK: - Helpers
+extension ContactViewModelTests {
+    private func makeSut() -> ContactViewModelProtocol {
+        return ContactViewModel()
+    }
+    
+    private func validForm(phone: String? = nil) -> FormModel {
+        return FormModel(name: "Bob",
+                         surname: "Dylan",
+                         email: "BobDylan@gmail.com",
+                         phone: phone,
+                         date: "2020-03-10",
+                         description: "Test1")
+    }
+    
+    private func invalidForm(name: String = "Bob", surname: String = "Dylan", email: String = "BobDylan@gmail.com", date: String = "2020-03-10", description: String = "Test1") -> FormModel {
+        return FormModel(name: name,
+                         surname: surname,
+                         email: email,
+                         phone: "",
+                         date: date,
+                         description: description)
+    }
+    
+    private func expect(sut: ContactViewModelProtocol, form: FormModel, isValid: Bool, file: StaticString = #file, line: UInt = #line) {
+        XCTAssertNil(sut.errorMessage, file: file, line: line)
+        sut.submitForm(name: form.name,
+                       surname: form.surname,
+                       email: form.email,
+                       phone: form.phone,
+                       date: form.date,
+                       description: form.description)
+        XCTAssertEqual(isValid, sut.errorMessage == nil, file: file, line: line)
+        XCTAssertEqual(isValid, sut.successMessage != nil, file: file, line: line)
     }
 }
