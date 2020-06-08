@@ -8,75 +8,57 @@
 
 import XCTest
 import CoreLocation
+import Combine
 @testable import Trips
 
 final class HomeViewModelTests: XCTestCase {
-    private var sut: HomeViewModelProtocol!
-
-    override func setUp() {
-        super.setUp()
-        sut = HomeViewModel(dependencies: MockHomeViewModelDependencies())
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testTripsSuccess() {
-        XCTAssert(!sut.isFetching)
-        XCTAssert(sut.error == nil)
+    func test_retrieveTripsSuccess() {
+        let sut = makeSUT()
+        let exp = expectation(description: "Waiting for cellModels")
+        var cancellable = Set<AnyCancellable>()
+        
         sut.retrieveTrips()
-        XCTAssert(!sut.stops(forTrip: 0).isEmpty)
-        XCTAssert(!sut.route(forTrip: 0).isEmpty)
-        XCTAssert(!sut.cellModels.isEmpty)
+        sut.$cellModels.sink { cellModels in
+            XCTAssertFalse(cellModels.isEmpty)
+            XCTAssertNil(sut.error)
+            exp.fulfill()
+        }.store(in: &cancellable)
+        
+        wait(for: [exp], timeout: 0.2)
     }
-
-    func testStopDetailSucess() {
-        testTripsSuccess()
-        XCTAssert(sut.stopDetail == nil)
-        sut.retrieveStopDetail(for: CLLocationCoordinate2D(latitude: 0,
-                                                           longitude: 0))
-        XCTAssert(sut.stopDetail != nil)
+    
+    func test_invalidTripIndex_returnsEmptyRoute() {
+        expect(sut: makeSUT(), withIndex: -1, for: .route, toBeEmpty: true)
     }
-
-    func testStopDetailFails() {
-        testTripsSuccess()
-        XCTAssert(sut.stopDetail == nil)
-        sut.retrieveStopDetail(for: CLLocationCoordinate2D(latitude: 0.1,
-                                                           longitude: 0))
-        XCTAssert(sut.stopDetail == nil)
+    
+    func test_validTripIndex_returnsNonEmptyRoute() {
+        expect(sut: makeSUT(), withIndex: 0, for: .route, toBeEmpty: false)
     }
-
-    func testIsStartSucess() {
-        testTripsSuccess()
-        XCTAssert(sut.isStart(coordinate: CLLocationCoordinate2D(latitude: 1,
-                                                                 longitude: 1)))
-        XCTAssertFalse(sut.isStart(coordinate: CLLocationCoordinate2D(latitude: 0,
-                                                                      longitude: 0)))
-        XCTAssertFalse(sut.isStart(coordinate: CLLocationCoordinate2D(latitude: 1.01,
-                                                                      longitude: 1)))
-        guard let firstStop = sut.stops(forTrip: 0).first
-            else {
-                XCTFail()
-                return
-        }
-        XCTAssertFalse(sut.isStart(coordinate: firstStop))
+    
+    func test_invalidTripIndex_returnsEmptyStop() {
+        expect(sut: makeSUT(), withIndex: -1, for: .stop, toBeEmpty: true)
     }
+    
+    func test_validTripIndex_returnsNonEmptyStop() {
+        expect(sut: makeSUT(), withIndex: 0, for: .stop, toBeEmpty: false)
+    }
+}
 
-    func testIsEndSucess() {
-        testTripsSuccess()
-        XCTAssert(sut.isEnd(coordinate: CLLocationCoordinate2D(latitude: 3,
-                                                                 longitude: 3)))
-        XCTAssertFalse(sut.isEnd(coordinate: CLLocationCoordinate2D(latitude: 0,
-                                                                      longitude: 0)))
-        XCTAssertFalse(sut.isEnd(coordinate: CLLocationCoordinate2D(latitude: 1.01,
-                                                                      longitude: 1)))
-        guard let firstStop = sut.stops(forTrip: 0).first
-            else {
-                XCTFail()
-                return
-        }
-        XCTAssertFalse(sut.isEnd(coordinate: firstStop))
+//MARK: - Helpers
+extension HomeViewModelTests {
+    private enum POIType {
+        case route
+        case stop
+    }
+    
+    private func makeSUT() -> HomeViewModelProtocol {
+        return HomeViewModel(dependencies: MockHomeViewModelDependencies())
+    }
+    
+    private func expect(sut: HomeViewModelProtocol, withIndex index: Int, for poiType: POIType, toBeEmpty: Bool) {
+        sut.retrieveTrips()
+        let route = poiType == .route ? sut.route(forTrip: index) : sut.stops(forTrip: index)
+        
+        XCTAssertEqual(route.isEmpty, toBeEmpty)
     }
 }
