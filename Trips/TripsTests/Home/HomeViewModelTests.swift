@@ -42,6 +42,14 @@ final class HomeViewModelTests: XCTestCase {
     func test_validTripIndex_returnsNonEmptyStop() {
         expect(sut: makeSUT(), withIndex: 0, for: .stop, toBeEmpty: false)
     }
+    
+    func test_invalidRoute_hasNotStopDetail() {
+        expect(sut: makeSUT(), forRoute: -50, hasDetail: false)
+    }
+    
+    func test_validRoute_hasStopDetail() {
+        expect(sut: makeSUT(), forRoute: 0, hasDetail: true)
+    }
 }
 
 //MARK: - Helpers
@@ -60,5 +68,20 @@ extension HomeViewModelTests {
         let route = poiType == .route ? sut.route(forTrip: index) : sut.stops(forTrip: index)
         
         XCTAssertEqual(route.isEmpty, toBeEmpty)
+    }
+    
+    private func expect(sut: HomeViewModelProtocol, forRoute id: Int, hasDetail assertion: Bool, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Waiting for stopDetails")
+        var cancellable = Set<AnyCancellable>()
+        
+        sut.retrieveTrips()
+        let route = sut.route(forTrip: id).first
+        sut.retrieveStopDetail(for: route ?? CLLocationCoordinate2D(latitude: -1, longitude: -1))
+        sut.$stopDetail.sink { detail in
+            XCTAssertEqual(assertion, detail != nil, file: file, line: line)
+            exp.fulfill()
+        }.store(in: &cancellable)
+        
+        wait(for: [exp], timeout: 0.2)
     }
 }
