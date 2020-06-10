@@ -50,6 +50,34 @@ final class HomeViewModelTests: XCTestCase {
     func test_validRoute_hasStopDetail() {
         expect(sut: makeSUT(), forRoute: 0, hasDetail: true)
     }
+    
+    func test_invalidRoute_returnsNoStart() {
+        let sut = makeSUT()
+        sut.retrieveTrips()
+        guard let coordinate = sut.route(forTrip: 50).first else { return }
+        
+        XCTAssertFalse(sut.isStart(coordinate: coordinate))
+    }
+    
+    func test_invalidCoordinateForValidRoute_returnsNoStart() {
+        let sut = makeSUT()
+        sut.retrieveTrips()
+        guard let coordinate = sut.route(forTrip: 0).last else { return }
+        XCTAssertFalse(sut.isStart(coordinate: coordinate))
+    }
+    
+    func test_validRouteWithValidCoordinate_andWithoutTripSelected_returnsNoStart() {
+        let sut = makeSUT()
+        sut.retrieveTrips()
+        XCTAssertFalse(sut.isStart(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0)))
+    }
+    
+    func test_validRouteWithValidCoordinate_andWithTripSelected_returnsStart() {
+        let sut = makeSUT()
+        sut.retrieveTrips()
+        guard let coordinate = sut.route(forTrip: 0).first else { return }
+        XCTAssertTrue(sut.isStart(coordinate: coordinate))
+    }
 }
 
 //MARK: - Helpers
