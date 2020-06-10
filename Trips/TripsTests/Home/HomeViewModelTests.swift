@@ -154,6 +154,6 @@ extension HomeViewModelTests {
                 XCTAssertFalse(toSucceed, "Expected failure because test has no validCoordinate", file: file, line: line)
                 return
         }
-        XCTAssertEqual(toSucceed, sut.isStart(coordinate: coordinate))
+        XCTAssertEqual(toSucceed, sut.isStart(coordinate: coordinate), file: file, line: line)
     }
 }
