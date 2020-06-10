@@ -15,16 +15,27 @@ public protocol SaverProtocol {
     func reset() -> Future<Void, TripError>
 }
 
-public final class CoreDataManager {
-    public static let shared = CoreDataManager()
-    private var viewContext: NSManagedObjectContext?
+public protocol ViewContextProcol {
+    var context: NSManagedObjectContext? { get }
+}
 
-    private init() {
+public struct DefaultViewContext: ViewContextProcol {
+    public var context: NSManagedObjectContext?
+    
+    public init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            viewContext = nil
+            context = nil
             return
         }
-        viewContext = appDelegate.persistentContainer.newBackgroundContext()
+        context = appDelegate.persistentContainer.newBackgroundContext()
+    }
+}
+
+public final class CoreDataManager {
+    private let viewContext: ViewContextProcol
+
+    public init(viewContext: ViewContextProcol = DefaultViewContext()) {
+        self.viewContext = viewContext
     }
 }
 
@@ -32,7 +43,7 @@ extension CoreDataManager: SaverProtocol {
     public var storedFormsCount: AnyPublisher<Int, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
-            guard let list = try? self?.viewContext?.fetch(fetchRequest)
+            guard let list = try? self?.viewContext.context?.fetch(fetchRequest)
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
@@ -43,7 +54,7 @@ extension CoreDataManager: SaverProtocol {
 
     public func save(form: FormData) -> Future<Void, TripError> {
         return Future { [weak self] promise in
-            guard let viewContext = self?.viewContext,
+            guard let viewContext = self?.viewContext.context,
                 let entityDescription = NSEntityDescription.entity(forEntityName: Entities.form, in: viewContext)
                 else {
                     promise(.failure(TripError.persistenceError))
@@ -51,7 +62,7 @@ extension CoreDataManager: SaverProtocol {
             }
 
             let user = NSManagedObject(entity: entityDescription,
-                                       insertInto: self?.viewContext)
+                                       insertInto: self?.viewContext.context)
 
             user.setValue(form.name, forKey: Keys.name)
             user.setValue(form.surname, forKey: Keys.surname)
@@ -72,13 +83,13 @@ extension CoreDataManager: SaverProtocol {
     public func reset() -> Future<Void, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
-            guard let list = try? self?.viewContext?.fetch(fetchRequest)
+            guard let list = try? self?.viewContext.context?.fetch(fetchRequest)
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
             }
-            list.forEach { self?.viewContext?.delete($0) }
-            guard let _ = try? self?.viewContext?.save()
+            list.forEach { self?.viewContext.context?.delete($0) }
+            guard let _ = try? self?.viewContext.context?.save()
                 else {
                     promise(.failure(TripError.persistenceError))
                     return

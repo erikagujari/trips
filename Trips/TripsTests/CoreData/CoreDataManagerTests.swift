@@ -39,7 +39,7 @@ final class CoreDataManagerTests: XCTestCase {
 
 extension CoreDataManagerTests {
     private func makeSUT() -> SaverProtocol {
-        return CoreDataManager.shared
+        return CoreDataManager()
     }
     
     private static func storeStubAndReturnCount(sut: SaverProtocol) -> AnyPublisher<Int, TripError> {

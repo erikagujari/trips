@@ -14,7 +14,7 @@ protocol SaveFormUseCaseDependenciesProtocol {
 }
 
 struct SaveFormUseCaseDependencies: SaveFormUseCaseDependenciesProtocol {
-    var saver: SaverProtocol = CoreDataManager.shared
+    var saver: SaverProtocol = CoreDataManager()
     var formDataMapper: FormDataMapper = FormDataMapper()
 }
 
