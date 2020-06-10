@@ -9,13 +9,14 @@ import Combine
 import CoreData
 import UIKit
 
-protocol SaverProtocol {
+public protocol SaverProtocol {
     var storedFormsCount: AnyPublisher<Int, TripError> { get }
     func save(form: FormData) -> Future<Void, TripError>
+    func reset() -> Future<Void, TripError>
 }
 
-final class CoreDataManager {
-    static let shared: CoreDataManager = CoreDataManager()
+public final class CoreDataManager {
+    public static let shared = CoreDataManager()
     private var viewContext: NSManagedObjectContext?
 
     private init() {
@@ -28,7 +29,7 @@ final class CoreDataManager {
 }
 
 extension CoreDataManager: SaverProtocol {
-    var storedFormsCount: AnyPublisher<Int, TripError> {
+    public var storedFormsCount: AnyPublisher<Int, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
             guard let list = try? self?.viewContext?.fetch(fetchRequest)
@@ -37,11 +38,10 @@ extension CoreDataManager: SaverProtocol {
                     return
             }
             return promise(.success(list.count))
-        }
-    .eraseToAnyPublisher()
+        }.eraseToAnyPublisher()
     }
 
-    func save(form: FormData) -> Future<Void, TripError> {
+    public func save(form: FormData) -> Future<Void, TripError> {
         return Future { [weak self] promise in
             guard let viewContext = self?.viewContext,
                 let entityDescription = NSEntityDescription.entity(forEntityName: Entities.form, in: viewContext)
@@ -61,6 +61,24 @@ extension CoreDataManager: SaverProtocol {
             user.setValue(form.description, forKey: Keys.description)
 
             guard let _ = try? viewContext.save()
+                else {
+                    promise(.failure(TripError.persistenceError))
+                    return
+            }
+            promise(.success(()))
+        }
+    }
+    
+    public func reset() -> Future<Void, TripError> {
+        return Future { [weak self] promise in
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
+            guard let list = try? self?.viewContext?.fetch(fetchRequest)
+                else {
+                    promise(.failure(TripError.persistenceError))
+                    return
+            }
+            list.forEach { self?.viewContext?.delete($0) }
+            guard let _ = try? self?.viewContext?.save()
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
