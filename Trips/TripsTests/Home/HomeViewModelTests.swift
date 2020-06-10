@@ -52,7 +52,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_emptyTripsList_returnsNoStart() {
-        let sut = makeSUT()
+        let sut = makePOISUT(type: .start)
         expect(sut: sut,
                hasTripList: false,
                isTripSelected: true,
@@ -62,7 +62,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_invalidRoute_returnsNoStart() {
-        let sut = makeSUT()
+        let sut = makePOISUT(type: .start)
         expect(sut: sut,
                hasTripList: true,
                isTripSelected: true,
@@ -72,7 +72,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_invalidCoordinateForValidRoute_returnsNoStart() {
-        let sut = makeSUT()
+        let sut = makePOISUT(type: .start)
         expect(sut: sut,
                hasTripList: true,
                isTripSelected: true,
@@ -82,7 +82,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_validRouteWithValidCoordinate_andWithoutTripSelected_returnsNoStart() {
-        let sut = makeSUT()
+        let sut = makePOISUT(type: .start)
         expect(sut: sut,
                hasTripList: true,
                isTripSelected: false,
@@ -92,7 +92,57 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_validRouteWithValidCoordinate_andWithTripSelected_returnsStart() {
-        let sut = makeSUT()
+        let sut = makePOISUT(type: .start)
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: true)
+    }
+    
+    func test_emptyTripsList_returnsNoEnd() {
+        let sut = makePOISUT(type: .end)
+        expect(sut: sut,
+               hasTripList: false,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: false)
+    }
+    
+    func test_invalidRoute_returnsNoEnd() {
+        let sut = makePOISUT(type: .end)
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 20,
+               validCoordinate: true,
+               toSucceed: false)
+    }
+    
+    func test_invalidCoordinateForValidRoute_returnsNoEnd() {
+        let sut = makePOISUT(type: .end)
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: false,
+               toSucceed: false)
+    }
+    
+    func test_validRouteWithValidCoordinate_andWithoutTripSelected_returnsNoEnd() {
+        let sut = makePOISUT(type: .end)
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: false,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: false)
+    }
+    
+    func test_validRouteWithValidCoordinate_andWithTripSelected_returnsEnd() {
+        let sut = makePOISUT(type: .end)
         expect(sut: sut,
                hasTripList: true,
                isTripSelected: true,
@@ -104,13 +154,23 @@ final class HomeViewModelTests: XCTestCase {
 
 //MARK: - Helpers
 extension HomeViewModelTests {
+    private typealias poiSUT = (viewModel: HomeViewModelProtocol, type: POICoordinateType)
     private enum POIType {
         case route
         case stop
     }
     
+    private enum POICoordinateType {
+        case start
+        case end
+    }
+    
     private func makeSUT() -> HomeViewModelProtocol {
         return HomeViewModel(dependencies: MockHomeViewModelDependencies())
+    }
+    
+    private func makePOISUT(type: POICoordinateType) -> poiSUT {
+        return (HomeViewModel(dependencies: MockHomeViewModelDependencies()), type)
     }
     
     private func expect(sut: HomeViewModelProtocol, withIndex index: Int, for poiType: POIType, toBeEmpty: Bool, file: StaticString = #file, line: UInt = #line) {
@@ -135,25 +195,26 @@ extension HomeViewModelTests {
         wait(for: [exp], timeout: 0.2)
     }
     
-    private func expect(sut: HomeViewModelProtocol, hasTripList: Bool, isTripSelected: Bool, withRoute index: Int, validCoordinate: Bool, toSucceed: Bool, file: StaticString = #file, line: UInt = #line) {
-        let sut = makeSUT()
+    private func expect(sut: poiSUT, hasTripList: Bool, isTripSelected: Bool, withRoute index: Int, validCoordinate: Bool, toSucceed: Bool, file: StaticString = #file, line: UInt = #line) {
         guard hasTripList else {
             XCTAssertFalse(toSucceed, "Expected failure because test has no trips", file: file, line: line)
             return
         }
         
-        sut.retrieveTrips()
+        sut.viewModel.retrieveTrips()
         guard isTripSelected else {
             XCTAssertFalse(toSucceed, "Expected failure because test has no tripSelected", file: file, line: line)
             return
         }
         
-        let route = sut.route(forTrip: index)
-        guard let coordinate = validCoordinate ? route.first : route.last
+        let route = sut.viewModel.route(forTrip: index)
+        let first = sut.type == .start ? route.first : route.last
+        let last = sut.type == .start ? route.last : route.first
+        guard let coordinate = validCoordinate ? first : last
             else {
                 XCTAssertFalse(toSucceed, "Expected failure because test has no validCoordinate", file: file, line: line)
                 return
         }
-        XCTAssertEqual(toSucceed, sut.isStart(coordinate: coordinate), file: file, line: line)
+        XCTAssertEqual(toSucceed, sut.type == .start ? sut.viewModel.isStart(coordinate: coordinate) : sut.viewModel.isEnd(coordinate: coordinate), file: file, line: line)
     }
 }
