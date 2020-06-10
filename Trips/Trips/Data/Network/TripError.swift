@@ -6,7 +6,7 @@
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
 
-enum TripError: Error {
+public enum TripError: Error {
     case serviceError, parsingError, persistenceError
 
     var message: String {

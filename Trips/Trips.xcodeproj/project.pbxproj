@@ -58,6 +58,7 @@
 		8299A62B240BC9480043D6C7 /* Trips.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8299A629240BC9480043D6C7 /* Trips.xcdatamodeld */; };
 		8299A62D240BC94A0043D6C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8299A62C240BC94A0043D6C7 /* Assets.xcassets */; };
 		8299A646240BCBEC0043D6C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */; };
+		82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		8299A636240BC94A0043D6C7 /* TripsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A63C240BC94A0043D6C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		9EDC46934630A31FDF39472D /* Pods_TripsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A406D1B73DDC76B8084C932C /* Pods-Trips.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trips.debug.xcconfig"; path = "Target Support Files/Pods-Trips/Pods-Trips.debug.xcconfig"; sourceTree = "<group>"; };
 		E2CF199EF717972E2C7DB869 /* Pods_Trips.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trips.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -425,6 +427,7 @@
 		8299A639240BC94A0043D6C7 /* TripsTests */ = {
 			isa = PBXGroup;
 			children = (
+				82C583F42491022000CA7C7D /* CoreData */,
 				82203D5C24190E45000DE5DE /* Contact */,
 				82203D5B24190E2D000DE5DE /* Home */,
 				8299A63C240BC94A0043D6C7 /* Info.plist */,
@@ -439,6 +442,14 @@
 				8224C8F6240C3B5900DC43CD /* Home */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		82C583F42491022000CA7C7D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -666,6 +677,7 @@
 			files = (
 				82203D5E24190E51000DE5DE /* ContactViewModelTests.swift in Sources */,
 				822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */,
+				82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */,
 				822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
