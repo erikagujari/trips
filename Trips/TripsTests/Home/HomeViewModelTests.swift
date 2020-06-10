@@ -173,6 +173,13 @@ extension HomeViewModelTests {
         return (HomeViewModel(dependencies: MockHomeViewModelDependencies()), type)
     }
     
+    private func firstAndLastElementsFor(route: [CLLocationCoordinate2D], coordinateType: POICoordinateType) -> (first: CLLocationCoordinate2D?, last: CLLocationCoordinate2D?) {
+        let first = coordinateType == .start ? route.first : route.last
+        let last = coordinateType == .start ? route.last : route.first
+        
+        return (first, last)
+    }
+    
     private func expect(sut: HomeViewModelProtocol, withIndex index: Int, for poiType: POIType, toBeEmpty: Bool, file: StaticString = #file, line: UInt = #line) {
         sut.retrieveTrips()
         let route = poiType == .route ? sut.route(forTrip: index) : sut.stops(forTrip: index)
@@ -207,9 +214,7 @@ extension HomeViewModelTests {
             return
         }
         
-        let route = sut.viewModel.route(forTrip: index)
-        let first = sut.type == .start ? route.first : route.last
-        let last = sut.type == .start ? route.last : route.first
+        let (first, last) = firstAndLastElementsFor(route: sut.viewModel.route(forTrip: index), coordinateType: sut.type)
         guard let coordinate = validCoordinate ? first : last
             else {
                 XCTAssertFalse(toSucceed, "Expected failure because test has no validCoordinate", file: file, line: line)
