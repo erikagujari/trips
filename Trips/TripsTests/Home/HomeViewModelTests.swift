@@ -51,32 +51,54 @@ final class HomeViewModelTests: XCTestCase {
         expect(sut: makeSUT(), forRoute: 0, hasDetail: true)
     }
     
+    func test_emptyTripsList_returnsNoStart() {
+        let sut = makeSUT()
+        expect(sut: sut,
+               hasTripList: false,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: false)
+    }
+    
     func test_invalidRoute_returnsNoStart() {
         let sut = makeSUT()
-        sut.retrieveTrips()
-        guard let coordinate = sut.route(forTrip: 50).first else { return }
-        
-        XCTAssertFalse(sut.isStart(coordinate: coordinate))
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 20,
+               validCoordinate: true,
+               toSucceed: false)
     }
     
     func test_invalidCoordinateForValidRoute_returnsNoStart() {
         let sut = makeSUT()
-        sut.retrieveTrips()
-        guard let coordinate = sut.route(forTrip: 0).last else { return }
-        XCTAssertFalse(sut.isStart(coordinate: coordinate))
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: false,
+               toSucceed: false)
     }
     
     func test_validRouteWithValidCoordinate_andWithoutTripSelected_returnsNoStart() {
         let sut = makeSUT()
-        sut.retrieveTrips()
-        XCTAssertFalse(sut.isStart(coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0)))
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: false,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: false)
     }
     
     func test_validRouteWithValidCoordinate_andWithTripSelected_returnsStart() {
         let sut = makeSUT()
-        sut.retrieveTrips()
-        guard let coordinate = sut.route(forTrip: 0).first else { return }
-        XCTAssertTrue(sut.isStart(coordinate: coordinate))
+        expect(sut: sut,
+               hasTripList: true,
+               isTripSelected: true,
+               withRoute: 0,
+               validCoordinate: true,
+               toSucceed: true)
     }
 }
 
@@ -91,11 +113,11 @@ extension HomeViewModelTests {
         return HomeViewModel(dependencies: MockHomeViewModelDependencies())
     }
     
-    private func expect(sut: HomeViewModelProtocol, withIndex index: Int, for poiType: POIType, toBeEmpty: Bool) {
+    private func expect(sut: HomeViewModelProtocol, withIndex index: Int, for poiType: POIType, toBeEmpty: Bool, file: StaticString = #file, line: UInt = #line) {
         sut.retrieveTrips()
         let route = poiType == .route ? sut.route(forTrip: index) : sut.stops(forTrip: index)
         
-        XCTAssertEqual(route.isEmpty, toBeEmpty)
+        XCTAssertEqual(route.isEmpty, toBeEmpty, file: file, line: line)
     }
     
     private func expect(sut: HomeViewModelProtocol, forRoute id: Int, hasDetail assertion: Bool, file: StaticString = #file, line: UInt = #line) {
@@ -111,5 +133,27 @@ extension HomeViewModelTests {
         }.store(in: &cancellable)
         
         wait(for: [exp], timeout: 0.2)
+    }
+    
+    private func expect(sut: HomeViewModelProtocol, hasTripList: Bool, isTripSelected: Bool, withRoute index: Int, validCoordinate: Bool, toSucceed: Bool, file: StaticString = #file, line: UInt = #line) {
+        let sut = makeSUT()
+        guard hasTripList else {
+            XCTAssertFalse(toSucceed, "Expected failure because test has no trips", file: file, line: line)
+            return
+        }
+        
+        sut.retrieveTrips()
+        guard isTripSelected else {
+            XCTAssertFalse(toSucceed, "Expected failure because test has no tripSelected", file: file, line: line)
+            return
+        }
+        
+        let route = sut.route(forTrip: index)
+        guard let coordinate = validCoordinate ? route.first : route.last
+            else {
+                XCTAssertFalse(toSucceed, "Expected failure because test has no validCoordinate", file: file, line: line)
+                return
+        }
+        XCTAssertEqual(toSucceed, sut.isStart(coordinate: coordinate))
     }
 }
