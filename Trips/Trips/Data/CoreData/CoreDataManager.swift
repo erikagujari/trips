@@ -43,7 +43,10 @@ extension CoreDataManager: SaverProtocol {
     public var storedFormsCount: AnyPublisher<Int, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
-            guard let list = try? self?.viewContext.context?.fetch(fetchRequest)
+            guard let self = self,
+                let context = self.viewContext.context,
+                NSEntityDescription.entity(forEntityName: Entities.form, in: context) != nil,
+                let list = try? context.fetch(fetchRequest)
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
