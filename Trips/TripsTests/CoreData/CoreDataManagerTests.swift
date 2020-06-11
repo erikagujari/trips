@@ -53,6 +53,25 @@ final class CoreDataManagerTests: XCTestCase {
             .store(in: &cancellable)
         wait(for: [exp], timeout: 0.2)
     }
+    
+    func test_resetFailsWithPersistenceError_whenHasNoAppDelegateContextReference() {
+        let sut = makeSUT(with: StubViewContext())
+        let exp = expectation(description: "Waiting for form count")
+        var cancellable = Set<AnyCancellable>()
+        
+        sut.reset()
+            .sink(receiveCompletion: { event in
+                switch event {
+                case .finished:
+                    XCTFail("Expected failure, but got success instead")
+                case .failure(let error):
+                    XCTAssertEqual(error, .persistenceError, "Expected persistence error, but got \(error) instead")
+                }
+                exp.fulfill()
+            }, receiveValue: { _ in })
+            .store(in: &cancellable)
+        wait(for: [exp], timeout: 0.2)
+    }
 }
 
 extension CoreDataManagerTests {

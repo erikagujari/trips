@@ -83,13 +83,17 @@ extension CoreDataManager: SaverProtocol {
     public func reset() -> Future<Void, TripError> {
         return Future { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Entities.form)
-            guard let list = try? self?.viewContext.context?.fetch(fetchRequest)
+            guard let self = self,
+                let context = self.viewContext.context,
+                NSEntityDescription.entity(forEntityName: Entities.form, in: context) != nil,
+                let list = try? context.fetch(fetchRequest)
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
             }
-            list.forEach { self?.viewContext.context?.delete($0) }
-            guard let _ = try? self?.viewContext.context?.save()
+            
+            list.forEach { context.delete($0) }
+            guard let _ = try? context.save()
                 else {
                     promise(.failure(TripError.persistenceError))
                     return
