@@ -11,12 +11,12 @@ import Trips
 import Combine
 
 final class CoreDataManagerTests: XCTestCase {
-    func test_storedFormsCountReturnsError_whenHasNoContext() {
+    func test_storedFormsCountFailsWithPersistenceError_whenHasNoContext() {
         let sut = makeSUT(with: EmptyViewContext())
         expectStoredFormsCount(sut: sut, toEndWith: .failure(.persistenceError))
     }
     
-    func test_storedFormsCountReturnsError_whenContextIsNotAsExpected() {
+    func test_storedFormsCountFailsWithPersistenceError_whenContextIsNotAsExpected() {
         let sut = makeSUT(with: StubViewContext())
         expectStoredFormsCount(sut: sut, toEndWith: .failure(.persistenceError))
     }
@@ -24,6 +24,31 @@ final class CoreDataManagerTests: XCTestCase {
     func test_storedFormsCountSucceeds_whenHasDefaultContext() {
         let sut = makeSUT()
         expectStoredFormsCount(sut: sut, toEndWith: .finished)
+    }
+    
+    func test_saveFormFailsWithPersistenceError_whenHasNoContext() {
+        let sut = makeSUT(with: EmptyViewContext())
+        expectSave(sut: sut, form: anyFormData(), toEndWith: .failure(.persistenceError))
+    }
+    
+    func test_saveFormFailsWithPersistenceError_whenContextIsNotAsExpected() {
+        let sut = makeSUT(with: StubViewContext())
+        expectSave(sut: sut, form: anyFormData(), toEndWith: .failure(.persistenceError))
+    }
+    
+    func test_saveFormSucceeds_whenHasDefaultContext() {
+        let sut = makeSUT()
+        expectStoredFormsCount(sut: sut, toEndWith: .finished, completion: { [weak self] beforeSavingCount in
+            guard let self = self else {
+                XCTFail("Error on self instance being nil")
+                return
+            }
+            self.expectSave(sut: sut, form: self.anyFormData(), toEndWith: .finished, completion: { _ in
+                self.expectStoredFormsCount(sut: sut, toEndWith: .finished, completion: { afterSavingCount in
+                    XCTAssertNotEqual(beforeSavingCount, afterSavingCount)
+                })
+            })
+        })
     }
     
     func test_resetFailsWithPersistenceError_whenHasNoContext() {
@@ -60,6 +85,15 @@ final class CoreDataManagerTests: XCTestCase {
 
 //MARK: - Helpers
 extension CoreDataManagerTests {
+    private func anyFormData() -> FormData {
+        return FormData(name: "Bob",
+                        surname: "Dylan",
+                        email: "bobdylan@gmail.com",
+                        phone: "611333444",
+                        date: "2020-10-06",
+                        description: "Improve this if you can")
+    }
+    
     private func makeSUT(with context: ViewContextProcol? = nil) -> SaverProtocol {
         guard let context = context
             else {
@@ -81,13 +115,29 @@ extension CoreDataManagerTests {
         wait(for: [exp], timeout: 0.2)
     }
     
-    private func expectStoredFormsCount(sut: SaverProtocol, toEndWith result: Subscribers.Completion<TripError>, file: StaticString = #file, line: UInt = #line) {
+    private func expectStoredFormsCount(sut: SaverProtocol, toEndWith result: Subscribers.Completion<TripError>, completion: ((Int) -> Void)? = nil, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Waiting for form count")
         var cancellable = Set<AnyCancellable>()
         
         sut.storedFormsCount
             .sink(receiveCompletion: { event in
                 XCTAssertEqual(event, result, file: file, line: line)
+                exp.fulfill()
+            }, receiveValue: { count in
+                completion?(count)
+            })
+            .store(in: &cancellable)
+        wait(for: [exp], timeout: 0.2)
+    }
+    
+    private func expectSave(sut: SaverProtocol, form: FormData, toEndWith result: Subscribers.Completion<TripError>, completion: ((Subscribers.Completion<TripError>) -> Void)? = nil, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Waiting for save form")
+        var cancellable = Set<AnyCancellable>()
+        
+        sut.save(form: form)
+            .sink(receiveCompletion: { event in
+                XCTAssertEqual(event, result, file: file, line: line)
+                completion?(event)
                 exp.fulfill()
             }, receiveValue: { _ in })
             .store(in: &cancellable)
