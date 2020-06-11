@@ -62,8 +62,10 @@ final class ContactViewModelTests: XCTestCase {
 
 //MARK: - Helpers
 extension ContactViewModelTests {
-    private func makeSut() -> ContactViewModelProtocol {
-        return ContactViewModel()
+    private func makeSut(file: StaticString = #file, line: UInt = #line) -> ContactViewModelProtocol {
+        let contact = ContactViewModel()
+        trackForMemoryLeaks(instance: contact, file: file, line: line)
+        return contact
     }
     
     private func validForm(phone: String? = nil) -> FormModel {

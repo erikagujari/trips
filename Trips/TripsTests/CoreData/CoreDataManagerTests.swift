@@ -97,9 +97,13 @@ extension CoreDataManagerTests {
     private func makeSUT(with context: ViewContextProcol? = nil) -> SaverProtocol {
         guard let context = context
             else {
-                return CoreDataManager()
+                let coreDataManager = CoreDataManager()
+                trackForMemoryLeaks(instance: coreDataManager)
+                return coreDataManager
         }
-        return CoreDataManager(viewContext: context)
+        let coreDataManager = CoreDataManager(viewContext: context)
+        trackForMemoryLeaks(instance: coreDataManager)
+        return coreDataManager
     }
     
     private func expectResetFor(sut: SaverProtocol, toEndWith result: Subscribers.Completion<TripError>, file: StaticString = #file, line: UInt = #line) {

@@ -165,12 +165,17 @@ extension HomeViewModelTests {
         case end
     }
     
-    private func makeSUT() -> HomeViewModelProtocol {
-        return HomeViewModel(dependencies: MockHomeViewModelDependencies())
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> HomeViewModelProtocol {
+        let homeViewModel = HomeViewModel(dependencies: MockHomeViewModelDependencies())
+        trackForMemoryLeaks(instance: homeViewModel, file: file, line: line)
+        return homeViewModel
     }
     
     private func makePOISUT(type: POICoordinateType) -> poiSUT {
-        return (HomeViewModel(dependencies: MockHomeViewModelDependencies()), type)
+        let homeViewModel = HomeViewModel(dependencies: MockHomeViewModelDependencies())
+        let poiSUT = (homeViewModel, type)
+        trackForMemoryLeaks(instance: homeViewModel)
+        return poiSUT
     }
     
     private func firstAndLastElementsFor(route: [CLLocationCoordinate2D], coordinateType: POICoordinateType) -> (first: CLLocationCoordinate2D?, last: CLLocationCoordinate2D?) {
