@@ -52,6 +52,7 @@
 		827CCEAE2418CC6D003EF1A3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CCEAD2418CC6D003EF1A3 /* CoreDataManager.swift */; };
 		827CCEB02418CCA8003EF1A3 /* FormEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CCEAF2418CCA8003EF1A3 /* FormEntity.swift */; };
 		827CCEB22418CEE1003EF1A3 /* SaveFormUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827CCEB12418CEE1003EF1A3 /* SaveFormUseCase.swift */; };
+		828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828147FB2492099200887C56 /* EmptyViewContext.swift */; };
 		8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A620240BC9480043D6C7 /* AppDelegate.swift */; };
 		8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A622240BC9480043D6C7 /* SceneDelegate.swift */; };
 		8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A624240BC9480043D6C7 /* HomeViewController.swift */; };
@@ -117,6 +118,7 @@
 		827CCEAD2418CC6D003EF1A3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		827CCEAF2418CCA8003EF1A3 /* FormEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntity.swift; sourceTree = "<group>"; };
 		827CCEB12418CEE1003EF1A3 /* SaveFormUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFormUseCase.swift; sourceTree = "<group>"; };
+		828147FB2492099200887C56 /* EmptyViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewContext.swift; sourceTree = "<group>"; };
 		8299A61D240BC9480043D6C7 /* Trips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A620240BC9480043D6C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8299A622240BC9480043D6C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -387,6 +389,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		828147FA2492098200887C56 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				828147FB2492099200887C56 /* EmptyViewContext.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		8299A614240BC9480043D6C7 = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +457,7 @@
 		82C583F42491022000CA7C7D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				828147FA2492098200887C56 /* Mock */,
 				82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */,
 			);
 			path = CoreData;
@@ -678,6 +689,7 @@
 				82203D5E24190E51000DE5DE /* ContactViewModelTests.swift in Sources */,
 				822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */,
 				82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */,
+				828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */,
 				822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

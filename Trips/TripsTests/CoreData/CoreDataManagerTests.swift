@@ -32,14 +32,36 @@ final class CoreDataManagerTests: XCTestCase {
         wait(for: [exp], timeout: 0.2)
     }
     
-    func test_coreDataManagerStoredFormsCount_isZeroAtTheBeginning() {
+    func test_resetFailsWithPersistenceError_whenHasNoContext() {
+        let sut = makeSUT(with: EmptyViewContext())
+        let exp = expectation(description: "Waiting for form count")
+        var cancellable = Set<AnyCancellable>()
         
+        reset(sut: sut)
+            .flatMap { _ in sut.storedFormsCount }
+            .sink(receiveCompletion: { event in
+                switch event {
+                case .finished:
+                    XCTFail("Expected failure, but got success instead")
+                case .failure(let error):
+                    XCTAssertEqual(error, .persistenceError, "Expected persistence error, but got \(error) instead")
+                }
+                exp.fulfill()
+            }, receiveValue: { count in
+                XCTAssertEqual(0, count)
+            })
+            .store(in: &cancellable)
+        wait(for: [exp], timeout: 0.2)
     }
 }
 
 extension CoreDataManagerTests {
-    private func makeSUT() -> SaverProtocol {
-        return CoreDataManager()
+    private func makeSUT(with context: ViewContextProcol? = nil) -> SaverProtocol {
+        guard let context = context
+            else {
+                return CoreDataManager()
+        }
+        return CoreDataManager(viewContext: context)
     }
     
     private static func storeStubAndReturnCount(sut: SaverProtocol) -> AnyPublisher<Int, TripError> {
