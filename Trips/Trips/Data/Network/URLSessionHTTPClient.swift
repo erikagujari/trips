@@ -1,5 +1,5 @@
 //
-//  TripServiceProvider.swift
+//  URLSessionHTTPClient.swift
 //  Trips
 //
 //  Created by AGUJARI Erik on 01/03/2020.
@@ -9,23 +9,26 @@
 import Foundation
 import Combine
 
-struct TripServiceProvider {
-    private let service = TripService.self
-    private let urlSession = URLSession.shared
-
-    func fetch<T: Decodable>(_ request: TripService, responseType: T.Type) -> AnyPublisher<T, TripError> {
-        return urlSession.dataTaskPublisher(for: request.urlRequest)
+struct URLSessionHTTPClient: CombineHTTPClient {
+    private let session: URLSession
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    func fetch<T: Decodable>(_ request: Service, responseType: T.Type) -> AnyPublisher<T, TripError> {
+        return session.dataTaskPublisher(for: request.urlRequest)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse
                     else {
                         throw TripError.serviceError
                 }
-
+                
                 guard (200...299).contains(httpResponse.statusCode)
                     else {
                         throw TripError.serviceError
                 }
-
+                
                 if let string = String(data: data, encoding: .utf8){
                     print("JSON Response:\n\(string)")
                 }

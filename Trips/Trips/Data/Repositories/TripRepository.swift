@@ -9,11 +9,11 @@
 import Combine
 
 protocol TripRepositoryDependenciesProtocol {
-    var service: TripServiceProvider { get }
+    var service: URLSessionHTTPClient { get }
 }
 
 struct TripRepositoryDependencies: TripRepositoryDependenciesProtocol {
-    var service: TripServiceProvider = TripServiceProvider()
+    var service: URLSessionHTTPClient = URLSessionHTTPClient()
 }
 
 protocol TripRepositoryProtocol {
@@ -29,12 +29,12 @@ struct TripRepository: TripRepositoryProtocol {
     }
 
     func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
-        dependencies.service.fetch(.trips,
+        dependencies.service.fetch(TripService.trips,
                                    responseType: [TripResponse].self)
     }
 
     func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
-        dependencies.service.fetch(.stops(id),
+        dependencies.service.fetch(TripService.stops(id),
                                    responseType: StopDetailResponse.self)
     }
 }
