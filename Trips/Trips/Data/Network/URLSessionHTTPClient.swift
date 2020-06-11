@@ -9,14 +9,14 @@
 import Foundation
 import Combine
 
-struct URLSessionHTTPClient: CombineHTTPClient {
+public class URLSessionHTTPClient: CombineHTTPClient {
     private let session: URLSession
     
-    init(session: URLSession = .shared) {
+    public init(session: URLSession = .shared) {
         self.session = session
     }
     
-    func fetch<T: Decodable>(_ request: Service, responseType: T.Type) -> AnyPublisher<T, TripError> {
+    public func fetch<T: Decodable>(_ request: Service, responseType: T.Type) -> AnyPublisher<T, TripError> {
         return session.dataTaskPublisher(for: request.urlRequest)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse

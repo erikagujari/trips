@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum ServiceMethod: String {
+public enum ServiceMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
-protocol Service {
+public protocol Service {
     var baseURL: String { get }
     var path: String { get }
     var parameters: [String: Any]? { get }

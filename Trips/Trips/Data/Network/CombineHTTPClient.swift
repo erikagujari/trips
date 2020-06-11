@@ -7,6 +7,6 @@
 //
 import Combine
 
-protocol CombineHTTPClient {
+public protocol CombineHTTPClient {
     func fetch<T: Decodable>(_ request: Service, responseType: T.Type) -> AnyPublisher<T, TripError>
 }
