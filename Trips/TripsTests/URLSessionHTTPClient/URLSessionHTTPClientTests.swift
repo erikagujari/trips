@@ -37,6 +37,12 @@ class URLSessionHTTPClientTests: XCTestCase {
             .store(in: &cancellable)
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func test_getFromUrl_failsOnRequestError() {
+        let requestError = anyNSError()
+        let receivedError = resultErrorFor(data: nil, response: nil, error: requestError)
+        XCTAssertEqual(receivedError as? TripError, TripError.serviceError)
+    }
 }
 
 extension URLSessionHTTPClientTests {
@@ -59,6 +65,40 @@ extension URLSessionHTTPClientTests {
         return URL(string: "http://any-url.com")!
     }
     
+    private func anyNSError() -> NSError {
+        return NSError(domain: "any error", code: 0, userInfo: nil)
+    }
+    
+    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
+        let result = resultFor(data: data, response: response, error: error, file: file, line: line)
+        
+        switch result {
+        case .failure(let error):
+            return error
+        default:
+            XCTFail("Expected failure, got result \(result) instead", file: file, line: line)
+            return nil
+        }
+    }
+    
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Subscribers.Completion<TripError> {
+        URLProtocolStub.stub(data: data, response: response, error: error)
+        let sut = makeSUT(file: file, line: line)
+        let exp = expectation(description: "Wait for completion")
+        var cancellable = Set<AnyCancellable>()
+        var receivedResult: Subscribers.Completion<TripError>!
+        
+        sut.fetch(StubGetService(), responseType: StubEntity.self)
+            .sink(receiveCompletion: { result in
+                receivedResult = result
+                exp.fulfill()
+            }, receiveValue: { _ in })
+            .store(in: &cancellable)
+        
+        wait(for: [exp], timeout: 1.0)
+        return receivedResult
+    }
+    
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
         private static var requestObserver: ((URLRequest) -> Void)?
@@ -70,8 +110,8 @@ extension URLSessionHTTPClientTests {
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
             stub = Stub(data: data,
-                              response: response,
-                              error: error)
+                        response: response,
+                        error: error)
         }
         
         static func observeRequests(observer: @escaping (URLRequest) -> Void) {
