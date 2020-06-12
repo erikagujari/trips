@@ -55,6 +55,15 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
     }
+    
+    func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+
+        let receivedValues = resultDataFor(data: data, response: response, error: nil)
+
+        XCTAssertEqual(receivedValues, data)
+    }
 }
 
 extension URLSessionHTTPClientTests {
@@ -65,7 +74,9 @@ extension URLSessionHTTPClientTests {
         var method: ServiceMethod = .get
     }
     
-    private struct StubEntity: Decodable {}
+    private struct StubEntity: Codable {
+        let root: String
+    }
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> CombineHTTPClient {
         let sut = URLSessionHTTPClient()
@@ -82,7 +93,8 @@ extension URLSessionHTTPClientTests {
     }
     
     private func anyData() -> Data {
-        return Data("Any data".utf8)
+        let json = ["root": "anyData"]
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private func nonHTTPURLResponse() -> URLResponse {
@@ -102,7 +114,7 @@ extension URLSessionHTTPClientTests {
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
         let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         
-        switch result {
+        switch result.requestResult {
         case .failure(let error):
             return error
         default:
@@ -111,22 +123,42 @@ extension URLSessionHTTPClientTests {
         }
     }
     
-    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Subscribers.Completion<TripError> {
+    private func resultDataFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Data? {
+        let result = resultFor(data: data, response: response, error: error ,file: file, line: line)
+        
+        switch result.requestResult {
+        case .finished:
+            return result.data
+        case let .failure(tripError):
+            XCTFail("Expected success, got result \(tripError) instead", file: file, line: line)
+            return nil
+        }
+    }
+    
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> (requestResult: Subscribers.Completion<TripError>, data: Data?) {
         URLProtocolStub.stub(data: data, response: response, error: error)
         let sut = makeSUT(file: file, line: line)
         let exp = expectation(description: "Wait for completion")
         var cancellable = Set<AnyCancellable>()
         var receivedResult: Subscribers.Completion<TripError>!
+        var receivedData: Data? = nil
         
         sut.fetch(StubGetService(), responseType: StubEntity.self)
             .sink(receiveCompletion: { result in
                 receivedResult = result
                 exp.fulfill()
-            }, receiveValue: { _ in })
+            }, receiveValue: { stub in
+                do {
+                    let data = try JSONEncoder().encode(stub)
+                    receivedData = data
+                } catch (let error) {
+                    XCTFail("Expected a stub entity, but got \(error)")
+                }
+            })
             .store(in: &cancellable)
         
         wait(for: [exp], timeout: 1.0)
-        return receivedResult
+        return (receivedResult, receivedData)
     }
     
     private class URLProtocolStub: URLProtocol {
