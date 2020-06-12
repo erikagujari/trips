@@ -55,6 +55,9 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyFailingHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyFailingHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyFailingHTTPURLResponse(), error: nil))
     }
     
     func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
@@ -108,6 +111,13 @@ extension URLSessionHTTPClientTests {
     private func anyHTTPURLResponse() -> HTTPURLResponse {
         return HTTPURLResponse(url: anyURL(),
                                statusCode: 200,
+                               httpVersion: nil,
+                               headerFields: nil)!
+    }
+    
+    private func anyFailingHTTPURLResponse() -> HTTPURLResponse {
+        return HTTPURLResponse(url: anyURL(),
+                               statusCode: 400,
                                httpVersion: nil,
                                headerFields: nil)!
     }
