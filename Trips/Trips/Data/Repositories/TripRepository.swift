@@ -8,14 +8,18 @@
 
 import Combine
 
-protocol TripRepositoryDependenciesProtocol {
+public protocol TripRepositoryDependenciesProtocol {
     var client: CombineHTTPClient { get }
     var loader: TripLoader { get }
 }
 
-struct TripRepositoryDependencies: TripRepositoryDependenciesProtocol {
-    var loader: TripLoader = DefaultTripLoader()
-    var client: CombineHTTPClient = URLSessionHTTPClient()
+public struct TripRepositoryDependencies: TripRepositoryDependenciesProtocol {
+    public var loader: TripLoader
+    public var client: CombineHTTPClient = URLSessionHTTPClient()
+    
+    public init(loader: TripLoader = DefaultTripLoader()) {
+        self.loader = loader
+    }
 }
 
 public protocol TripRepositoryProtocol {
@@ -23,19 +27,19 @@ public protocol TripRepositoryProtocol {
     func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError>
 }
 
-struct TripRepository: TripRepositoryProtocol {
-    let dependencies: TripRepositoryDependenciesProtocol
-
-    init(dependencies: TripRepositoryDependenciesProtocol = TripRepositoryDependencies()) {
+public struct TripRepository: TripRepositoryProtocol {
+    private let dependencies: TripRepositoryDependenciesProtocol
+    
+    public init(dependencies: TripRepositoryDependenciesProtocol = TripRepositoryDependencies()) {
         self.dependencies = dependencies
     }
-
-    func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
+    
+    public func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
         let service = dependencies.loader.tripsService
         return dependencies.client.fetch(service, responseType: [TripResponse].self)
     }
-
-    func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
+    
+    public func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
         let service = dependencies.loader.stopService(id: id)
         return dependencies.client.fetch(service, responseType: StopDetailResponse.self)
     }

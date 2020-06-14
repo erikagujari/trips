@@ -14,6 +14,8 @@ public struct DefaultTripLoader: TripLoader {
     public func stopService(id: Int) -> Service {
         return StopService(id: id)
     }
+    
+    public init() {}
 }
 
 public struct StopService: Service {
