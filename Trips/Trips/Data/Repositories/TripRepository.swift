@@ -9,11 +9,11 @@
 import Combine
 
 protocol TripRepositoryDependenciesProtocol {
-    var service: URLSessionHTTPClient { get }
+    var service: CombineHTTPClient { get }
 }
 
 struct TripRepositoryDependencies: TripRepositoryDependenciesProtocol {
-    var service: URLSessionHTTPClient = URLSessionHTTPClient()
+    var service: CombineHTTPClient = URLSessionHTTPClient()
 }
 
 protocol TripRepositoryProtocol {
