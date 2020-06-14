@@ -7,7 +7,7 @@
 //
 
 // MARK: - StopDetailResponse
-struct StopDetailResponse: Decodable {
+public struct StopDetailResponse: Decodable {
     let userName: String?
     let point: PointResponse?
     let price: Double?

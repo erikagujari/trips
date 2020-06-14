@@ -7,7 +7,7 @@
 //
 
 // MARK: - TripResponse
-struct TripResponse: Decodable {
+public struct TripResponse: Decodable {
     let origin: DestinationResponse?
     let stops: [StopResponse]?
     let destination: DestinationResponse?

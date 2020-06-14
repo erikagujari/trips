@@ -26,7 +26,7 @@
 		8224C8E2240C334100DC43CD /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E1240C334100DC43CD /* HomeViewModel.swift */; };
 		8224C8E7240C340000DC43CD /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E6240C340000DC43CD /* TripRepository.swift */; };
 		8224C8EA240C34A600DC43CD /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8E9240C34A600DC43CD /* Service.swift */; };
-		8224C8EC240C352A00DC43CD /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8EB240C352A00DC43CD /* TripService.swift */; };
+		8224C8EC240C352A00DC43CD /* DefaultTripLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8EB240C352A00DC43CD /* DefaultTripLoader.swift */; };
 		8224C8EE240C36DA00DC43CD /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8ED240C36DA00DC43CD /* URLSessionHTTPClient.swift */; };
 		8224C8F0240C371700DC43CD /* TripError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8EF240C371700DC43CD /* TripError.swift */; };
 		8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8224C8F2240C38E400DC43CD /* TripResponse.swift */; };
@@ -64,6 +64,7 @@
 		8299A646240BCBEC0043D6C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */; };
 		82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */; };
 		82FC011924965C9A00FBBCAC /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011824965C9A00FBBCAC /* ServiceTests.swift */; };
+		82FC011F24967B5200FBBCAC /* TripLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011E24967B5200FBBCAC /* TripLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +97,7 @@
 		8224C8E1240C334100DC43CD /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8224C8E6240C340000DC43CD /* TripRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepository.swift; sourceTree = "<group>"; };
 		8224C8E9240C34A600DC43CD /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		8224C8EB240C352A00DC43CD /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
+		8224C8EB240C352A00DC43CD /* DefaultTripLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTripLoader.swift; sourceTree = "<group>"; };
 		8224C8ED240C36DA00DC43CD /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		8224C8EF240C371700DC43CD /* TripError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripError.swift; sourceTree = "<group>"; };
 		8224C8F2240C38E400DC43CD /* TripResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripResponse.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		82FC011824965C9A00FBBCAC /* ServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTests.swift; sourceTree = "<group>"; };
+		82FC011E24967B5200FBBCAC /* TripLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLoader.swift; sourceTree = "<group>"; };
 		9EDC46934630A31FDF39472D /* Pods_TripsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A406D1B73DDC76B8084C932C /* Pods-Trips.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trips.debug.xcconfig"; path = "Target Support Files/Pods-Trips/Pods-Trips.debug.xcconfig"; sourceTree = "<group>"; };
 		E2CF199EF717972E2C7DB869 /* Pods_Trips.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trips.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,9 +280,10 @@
 			isa = PBXGroup;
 			children = (
 				82813C40249278C700CA9083 /* CombineHTTPClient.swift */,
+				8224C8EB240C352A00DC43CD /* DefaultTripLoader.swift */,
 				8224C8E9240C34A600DC43CD /* Service.swift */,
 				8224C8EF240C371700DC43CD /* TripError.swift */,
-				8224C8EB240C352A00DC43CD /* TripService.swift */,
+				82FC011E24967B5200FBBCAC /* TripLoader.swift */,
 				8224C8ED240C36DA00DC43CD /* URLSessionHTTPClient.swift */,
 			);
 			path = Network;
@@ -668,7 +671,7 @@
 				822497EC240FEEB400150B8D /* HomeTableViewCell.swift in Sources */,
 				822855FC2412C8FC00D34212 /* StopDetailView.swift in Sources */,
 				822855FA2412C46000D34212 /* StopAnnotationMapper.swift in Sources */,
-				8224C8EC240C352A00DC43CD /* TripService.swift in Sources */,
+				8224C8EC240C352A00DC43CD /* DefaultTripLoader.swift in Sources */,
 				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
 				822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */,
 				82788E96248D2A0A0047ED6B /* FormDataMapper.swift in Sources */,
@@ -686,6 +689,7 @@
 				8224C8F0240C371700DC43CD /* TripError.swift in Sources */,
 				821B2D5A2417AA9D00D3D339 /* ContactViewModel.swift in Sources */,
 				822B3554241857BF00FCA359 /* UITextField+ToolBar.swift in Sources */,
+				82FC011F24967B5200FBBCAC /* TripLoader.swift in Sources */,
 				8245FA5E240E618A00CC9DB9 /* TripResponseMapper.swift in Sources */,
 				82813C41249278C700CA9083 /* CombineHTTPClient.swift in Sources */,
 				827CCEB22418CEE1003EF1A3 /* SaveFormUseCase.swift in Sources */,
