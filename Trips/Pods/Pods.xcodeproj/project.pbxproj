@@ -45,10 +45,10 @@
 		20D7D892E98662BDF87F1414AD764574 /* Pods-Trips-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Trips-acknowledgements.markdown"; sourceTree = "<group>"; };
 		292F1C8A897C8A39365F5DACA283B188 /* Pods-Trips-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Trips-dummy.m"; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		34770F122141CCCBE4EF77B21BEA037E /* Polyline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Polyline.framework; path = Polyline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		34770F122141CCCBE4EF77B21BEA037E /* Polyline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Polyline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CE98970BC4A27093C93A00F27E46569 /* Pods-TripsTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TripsTests-Info.plist"; sourceTree = "<group>"; };
 		4348ACF7580C453075E559AAD9B6DCE3 /* Polyline-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Polyline-prefix.pch"; sourceTree = "<group>"; };
-		51667006946018EE74FD343D9E4710FD /* Pods_Trips.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Trips.framework; path = "Pods-Trips.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51667006946018EE74FD343D9E4710FD /* Pods_Trips.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trips.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62DA4E8A418833F54F9CD59481760117 /* Polyline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Polyline.swift; path = Sources/Polyline/Polyline.swift; sourceTree = "<group>"; };
 		6F51AB849279C91B43BD19395C45DA22 /* Polyline.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Polyline.modulemap; sourceTree = "<group>"; };
 		7415CEA22DA7807E64355C6615D4EA54 /* Pods-Trips.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trips.release.xcconfig"; sourceTree = "<group>"; };
@@ -57,9 +57,9 @@
 		7A1CEE12221F397178FC5F6F3FE3A8EB /* Pods-Trips-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Trips-Info.plist"; sourceTree = "<group>"; };
 		840BABCB0FEAC5FC7E4915578445A524 /* Pods-Trips-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Trips-frameworks.sh"; sourceTree = "<group>"; };
 		89404C8118C2DD9D6796946599D5E759 /* Pods-TripsTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-TripsTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		8FFFF742A338A09C8802DBFF987B48F6 /* Pods_TripsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_TripsTests.framework; path = "Pods-TripsTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FFFF742A338A09C8802DBFF987B48F6 /* Pods_TripsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9809BA15397EE741D0D0FF27CD9A44C2 /* Pods-Trips-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Trips-umbrella.h"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A7B1D1AF7C09FAF0C3FB3D1940070D4F /* Pods-Trips.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Trips.debug.xcconfig"; sourceTree = "<group>"; };
 		BCBA00CCD0777762C0D5BA2525773D41 /* Polyline-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Polyline-dummy.m"; sourceTree = "<group>"; };
 		BCFAEBF7C63863D63A4613226D870361 /* Pods-TripsTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TripsTests.modulemap"; sourceTree = "<group>"; };
@@ -121,7 +121,6 @@
 				62DA4E8A418833F54F9CD59481760117 /* Polyline.swift */,
 				FC39793BF88DA71546279616775CAD01 /* Support Files */,
 			);
-			name = Polyline;
 			path = Polyline;
 			sourceTree = "<group>";
 		};
@@ -312,6 +311,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 9F23324922FEE092B57506EBAD290112 /* Products */;
