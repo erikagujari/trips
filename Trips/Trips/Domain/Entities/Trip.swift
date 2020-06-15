@@ -7,7 +7,7 @@
 //
 import CoreLocation
 
-struct Trip {
+public struct Trip {
     let origin: Destination
     let stops: [Stop]
     let destination: Destination
@@ -37,4 +37,3 @@ struct Stop {
     let point: Point
     let id: Int
 }
-

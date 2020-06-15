@@ -17,12 +17,29 @@ public struct TripResponse: Decodable {
     let driverName: String?
     let route: String?
     let status: String?
+    
+    public init(origin: DestinationResponse?, stops: [StopResponse]?, destination: DestinationResponse?, endTime: String?, startTime: String?, description: String?, driverName: String?, route: String?, status: String?) {
+        self.origin = origin
+        self.stops = stops
+        self.destination = destination
+        self.endTime = endTime
+        self.startTime = startTime
+        self.description = description
+        self.driverName = driverName
+        self.route = route
+        self.status = status
+    }
 }
 
 // MARK: - Destination
-struct DestinationResponse: Decodable {
+public struct DestinationResponse: Decodable {
     let address: String?
     let point: PointResponse?
+    
+    public init(address: String?, point: PointResponse?) {
+        self.address = address
+        self.point = point
+    }
 }
 
 // MARK: - Point
@@ -34,10 +51,20 @@ public struct PointResponse: Decodable {
         case latitude = "_latitude"
         case longitude = "_longitude"
     }
+    
+    public init(latitude: Double?, longitude: Double?) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }
 
 // MARK: - Stop
-struct StopResponse: Decodable {
+public struct StopResponse: Decodable {
     let point: PointResponse?
     let id: Int?
+    
+    public init(point: PointResponse?, id: Int?) {
+        self.point = point
+        self.id = id
+    }
 }

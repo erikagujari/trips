@@ -7,26 +7,30 @@
 //
 import Combine
 
-protocol RetrieveTripsUseCaseProtocol {
+public protocol RetrieveTripsUseCaseProtocol {
     var trips: AnyPublisher<[Trip], TripError> { get }
 }
 
-protocol RetrieveTripsUseCaseDependenciesProtocol {
+public protocol RetrieveTripsUseCaseDependenciesProtocol {
     var repository: TripRepositoryProtocol { get }
 }
 
-struct RetrieveTripsUseCaseDependencies: RetrieveTripsUseCaseDependenciesProtocol {
-    var repository: TripRepositoryProtocol = TripRepository()
+public struct RetrieveTripsUseCaseDependencies: RetrieveTripsUseCaseDependenciesProtocol {
+    public var repository: TripRepositoryProtocol
+    
+    public init(repository: TripRepositoryProtocol = TripRepository()) {
+        self.repository = repository
+    }
 }
 
-struct RetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
+public class RetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
     private let dependencies: RetrieveTripsUseCaseDependenciesProtocol
 
-    init(dependencies: RetrieveTripsUseCaseDependenciesProtocol = RetrieveTripsUseCaseDependencies()) {
+    public init(dependencies: RetrieveTripsUseCaseDependenciesProtocol = RetrieveTripsUseCaseDependencies()) {
         self.dependencies = dependencies
     }
 
-    var trips: AnyPublisher<[Trip], TripError> {
+    public var trips: AnyPublisher<[Trip], TripError> {
         return dependencies.repository.retrieveTrips()
             .flatMapNilEntityToError(mapperType: TripArrayResponseMapper.self)
     }

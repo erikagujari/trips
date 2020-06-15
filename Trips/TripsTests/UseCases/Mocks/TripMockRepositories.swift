@@ -22,10 +22,34 @@ struct TripErrorRepository: TripRepositoryProtocol {
     }
 }
 
+struct TripEmptyRepository: TripRepositoryProtocol {
+    func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
+        return Future { promise in
+            promise(.success([]))
+        }.eraseToAnyPublisher()
+    }
+    
+    func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
+        return Future { promise in
+            promise(.failure(TripError.serviceError))
+        }.eraseToAnyPublisher()
+    }
+}
+
 struct TripInvalidRepository: TripRepositoryProtocol {
     func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
         return Future { promise in
-            promise(.failure(TripError.serviceError))
+            let invalidStop = StopResponse(point: nil, id: nil)
+            let trip = TripResponse(origin: nil,
+                                    stops: [invalidStop],
+                                    destination: nil,
+                                    endTime: "",
+                                    startTime: "",
+                                    description: nil,
+                                    driverName: nil,
+                                    route: nil,
+                                    status: nil)
+            promise(.success([trip]))
         }.eraseToAnyPublisher()
     }
     
@@ -46,7 +70,21 @@ struct TripInvalidRepository: TripRepositoryProtocol {
 struct TripValidRepository: TripRepositoryProtocol {
     func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
         return Future { promise in
-            promise(.failure(TripError.serviceError))
+            let originPoint = PointResponse(latitude: 1.0, longitude: 1.0)
+            let origin = DestinationResponse(address: "", point: originPoint)
+            let destinationPoint = PointResponse(latitude: 2.0, longitude: 2.0)
+            let destination = DestinationResponse(address: "", point: destinationPoint)
+            
+            let trip = TripResponse(origin: origin,
+                                    stops: nil,
+                                    destination: destination,
+                                    endTime: "",
+                                    startTime: "",
+                                    description: nil,
+                                    driverName: nil,
+                                    route: nil,
+                                    status: nil)
+            promise(.success([trip]))
         }.eraseToAnyPublisher()
     }
     
@@ -71,6 +109,35 @@ struct TripValidRepository: TripRepositoryProtocol {
                                                     tripId: id)
                 promise(.success(stopDetail))
             }
+        }.eraseToAnyPublisher()
+    }
+}
+
+struct TripCompleteRepository: TripRepositoryProtocol {
+    func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
+        return Future { promise in
+            let originPoint = PointResponse(latitude: 1.0, longitude: 1.0)
+            let origin = DestinationResponse(address: "", point: originPoint)
+            let destinationPoint = PointResponse(latitude: 2.0, longitude: 2.0)
+            let destination = DestinationResponse(address: "", point: destinationPoint)
+            let stop = StopResponse(point: originPoint, id: 0)
+            
+            let trip = TripResponse(origin: origin,
+                                    stops: [stop],
+                                    destination: destination,
+                                    endTime: "",
+                                    startTime: "",
+                                    description: "a description",
+                                    driverName: "Fernando Alonso",
+                                    route: "",
+                                    status: "Running")
+            promise(.success([trip]))
+        }.eraseToAnyPublisher()
+    }
+    
+    func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
+        return Future { promise in
+            promise(.failure(TripError.serviceError))
         }.eraseToAnyPublisher()
     }
 }
