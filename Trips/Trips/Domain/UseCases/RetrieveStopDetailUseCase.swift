@@ -33,6 +33,6 @@ public class RetrieveStopDetailUseCase: RetrieveStopDetailUseCaseProtocol {
     
     public func fetchStopDetail(id: Int) -> AnyPublisher<StopDetail, TripError> {
         return dependencies.repository.retrieveStop(id: id)
-            .flatMapNilEntityToError(mapperType: StopDetailResponseMapper.self, responseType: StopDetailResponse.self, resultType: StopDetail.self)
+            .flatMapNilEntityToError(mapperType: StopDetailResponseMapper.self)
     }
 }

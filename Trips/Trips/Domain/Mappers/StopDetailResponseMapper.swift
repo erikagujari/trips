@@ -7,10 +7,7 @@
 //
 import Foundation
 
-public struct StopDetailResponseMapper: ResponseMapper {
-    typealias MappingSource = StopDetailResponse
-    typealias MappingResult = StopDetail
-    
+public struct StopDetailResponseMapper: ResponseMapper {    
     static func map(response: StopDetailResponse) -> StopDetail? {
         guard response.tripId != nil,
             let userName = response.userName,

@@ -8,26 +8,24 @@
 import Combine
 
 protocol ResponseMapper {
-    associatedtype MappingSource
-    associatedtype MappingResult
-    static func map(response: MappingSource) -> MappingResult?
+    associatedtype Source
+    associatedtype Result
+    static func map(response: Source) -> Result?
 }
 
 extension Publisher where Failure == TripError  {
-    func flatMapNilEntityToError<ResponseResult: Any, MappedResult: Any, Mapper: ResponseMapper>(mapperType: Mapper.Type, responseType: ResponseResult.Type, resultType: MappedResult.Type) -> AnyPublisher<MappedResult, TripError> where
-        Mapper.MappingSource == ResponseResult,
-        Mapper.MappingResult == MappedResult {
-        return flatMap { response -> AnyPublisher<MappedResult, TripError> in
-            guard let response = response as? ResponseResult,
-                let mappedResponse: MappedResult = mapperType.map(response: response)
+    func flatMapNilEntityToError<Mapper: ResponseMapper>(mapperType: Mapper.Type) -> AnyPublisher<Mapper.Result, TripError> {
+        return flatMap { response -> AnyPublisher<Mapper.Result, TripError> in
+            guard let response = response as? Mapper.Source,
+                let mappedResponse: Mapper.Result = mapperType.map(response: response)
                 else {
                     return Fail(error: TripError.parsingError)
-                    .eraseToAnyPublisher()
+                        .eraseToAnyPublisher()
             }
             return Just(mappedResponse)
-            .setFailureType(to: TripError.self)
-            .eraseToAnyPublisher()
+                .setFailureType(to: TripError.self)
+                .eraseToAnyPublisher()
         }
-    .eraseToAnyPublisher()
+        .eraseToAnyPublisher()
     }
 }
