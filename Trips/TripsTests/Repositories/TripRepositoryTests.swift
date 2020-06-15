@@ -45,7 +45,9 @@ final class TripRepositoryTests: XCTestCase {
 extension TripRepositoryTests {
     private func makeSUT(with loader: TripLoader) -> TripRepositoryProtocol {
         let dependencies: TripRepositoryDependenciesProtocol = TripRepositoryDependencies(loader: loader)
-        return TripRepository(dependencies: dependencies)
+        let repository = TripRepository(dependencies: dependencies)
+        trackForMemoryLeaks(instance: repository)
+        return repository
     }
     
     private func expectRetrieveTrips(for sut: TripRepositoryProtocol, toEndWith expectedResult: Subscribers.Completion<TripError>, file: StaticString = #file, line: UInt = #line) {

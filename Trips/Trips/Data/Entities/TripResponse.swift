@@ -26,7 +26,7 @@ struct DestinationResponse: Decodable {
 }
 
 // MARK: - Point
-struct PointResponse: Decodable {
+public struct PointResponse: Decodable {
     let latitude: Double?
     let longitude: Double?
 

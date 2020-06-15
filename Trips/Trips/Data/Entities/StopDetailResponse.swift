@@ -8,11 +8,21 @@
 
 // MARK: - StopDetailResponse
 public struct StopDetailResponse: Decodable {
-    let userName: String?
-    let point: PointResponse?
-    let price: Double?
-    let stopTime: String?
-    let paid: Bool?
-    let address: String?
-    let tripId: Int?
+    public let userName: String?
+    public let point: PointResponse?
+    public let price: Double?
+    public let stopTime: String?
+    public let paid: Bool?
+    public let address: String?
+    public let tripId: Int?
+    
+    public init(userName: String?, point: PointResponse?, price: Double?, stopTime: String?, paid: Bool?, address: String?, tripId: Int?) {
+        self.userName = userName
+        self.point = point
+        self.price = price
+        self.stopTime = stopTime
+        self.paid = paid
+        self.address = address
+        self.tripId = tripId
+    }
 }

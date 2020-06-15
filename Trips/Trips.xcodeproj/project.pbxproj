@@ -56,12 +56,14 @@
 		82813C4324927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813C4224927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift */; };
 		82813C4624927D0200CA9083 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813C4524927D0200CA9083 /* URLSessionHTTPClientTests.swift */; };
 		828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828147FB2492099200887C56 /* EmptyViewContext.swift */; };
+		828AEE3924974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */; };
 		8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A620240BC9480043D6C7 /* AppDelegate.swift */; };
 		8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A622240BC9480043D6C7 /* SceneDelegate.swift */; };
 		8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A624240BC9480043D6C7 /* HomeViewController.swift */; };
 		8299A62B240BC9480043D6C7 /* Trips.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8299A629240BC9480043D6C7 /* Trips.xcdatamodeld */; };
 		8299A62D240BC94A0043D6C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8299A62C240BC94A0043D6C7 /* Assets.xcassets */; };
 		8299A646240BCBEC0043D6C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */; };
+		829F0228249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */; };
 		82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */; };
 		82FC011924965C9A00FBBCAC /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011824965C9A00FBBCAC /* ServiceTests.swift */; };
 		82FC011D24966B7400FBBCAC /* TripRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011C24966B7400FBBCAC /* TripRepositoryTests.swift */; };
@@ -128,6 +130,7 @@
 		82813C4224927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		82813C4524927D0200CA9083 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		828147FB2492099200887C56 /* EmptyViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewContext.swift; sourceTree = "<group>"; };
+		828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveStopDetailUseCaseTests.swift; sourceTree = "<group>"; };
 		8299A61D240BC9480043D6C7 /* Trips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A620240BC9480043D6C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8299A622240BC9480043D6C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +141,7 @@
 		8299A636240BC94A0043D6C7 /* TripsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A63C240BC94A0043D6C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+FlatMapNilEntityToError.swift"; sourceTree = "<group>"; };
 		82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		82FC011824965C9A00FBBCAC /* ServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTests.swift; sourceTree = "<group>"; };
 		82FC011C24966B7400FBBCAC /* TripRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepositoryTests.swift; sourceTree = "<group>"; };
@@ -202,8 +206,8 @@
 		82203D5B24190E2D000DE5DE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				822497E4240FCF9000150B8D /* HomeViewModelTests.swift */,
 				822497E6240FD0FA00150B8D /* Mocks */,
+				822497E4240FCF9000150B8D /* HomeViewModelTests.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -383,6 +387,7 @@
 				821B2D5B2417ABC800D3D339 /* UIView+Constraints.swift */,
 				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
 				822B3553241857BF00FCA359 /* UITextField+ToolBar.swift */,
+				829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -417,6 +422,14 @@
 				828147FB2492099200887C56 /* EmptyViewContext.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		828AEE3A24974BEA005E3367 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */,
+			);
+			path = UseCases;
 			sourceTree = "<group>";
 		};
 		8299A614240BC9480043D6C7 = {
@@ -459,6 +472,7 @@
 		8299A639240BC94A0043D6C7 /* TripsTests */ = {
 			isa = PBXGroup;
 			children = (
+				828AEE3A24974BEA005E3367 /* UseCases */,
 				82FC011B24966B5B00FBBCAC /* Repositories */,
 				82FC011A24966B4E00FBBCAC /* Service */,
 				82813C4424927CEB00CA9083 /* URLSessionHTTPClient */,
@@ -691,6 +705,7 @@
 				822855FC2412C8FC00D34212 /* StopDetailView.swift in Sources */,
 				822855FA2412C46000D34212 /* StopAnnotationMapper.swift in Sources */,
 				8224C8EC240C352A00DC43CD /* DefaultTripLoader.swift in Sources */,
+				829F0228249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift in Sources */,
 				8245FA64240E673F00CC9DB9 /* StopResponseMapper.swift in Sources */,
 				822855F82412BF3900D34212 /* StopAnnotationModel.swift in Sources */,
 				82788E96248D2A0A0047ED6B /* FormDataMapper.swift in Sources */,
@@ -736,6 +751,7 @@
 				82FC011D24966B7400FBBCAC /* TripRepositoryTests.swift in Sources */,
 				822497E5240FCF9000150B8D /* HomeViewModelTests.swift in Sources */,
 				82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */,
+				828AEE3924974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift in Sources */,
 				828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */,
 				822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */,
 				82813C4324927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift in Sources */,

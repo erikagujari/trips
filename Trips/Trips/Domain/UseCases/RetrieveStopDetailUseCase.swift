@@ -8,30 +8,31 @@
 
 import Combine
 
-protocol RetrieveStopDetailUseCaseProtocol {
+public protocol RetrieveStopDetailUseCaseProtocol {
     func fetchStopDetail(id: Int) -> AnyPublisher<StopDetail, TripError>
 }
 
-protocol RetrieveStopDetailUseCaseDependenciesProtocol {
+public protocol RetrieveStopDetailUseCaseDependenciesProtocol {
     var repository: TripRepositoryProtocol { get }
-    var mapper: StopDetailResponseMapper { get }
 }
 
-struct RetrieveStopDetailUseCaseDependencies: RetrieveStopDetailUseCaseDependenciesProtocol {
-    var repository: TripRepositoryProtocol = TripRepository()
-    var mapper: StopDetailResponseMapper = StopDetailResponseMapper()
+public struct RetrieveStopDetailUseCaseDependencies: RetrieveStopDetailUseCaseDependenciesProtocol {
+    public var repository: TripRepositoryProtocol
+    
+    public init(repository: TripRepositoryProtocol = TripRepository()) {
+        self.repository = repository
+    }
 }
 
-struct RetrieveStopDetailUseCase: RetrieveStopDetailUseCaseProtocol {
+public class RetrieveStopDetailUseCase: RetrieveStopDetailUseCaseProtocol {
     private let dependencies: RetrieveStopDetailUseCaseDependenciesProtocol
 
-    init(dependencies: RetrieveStopDetailUseCaseDependenciesProtocol = RetrieveStopDetailUseCaseDependencies()) {
+    public init(dependencies: RetrieveStopDetailUseCaseDependenciesProtocol = RetrieveStopDetailUseCaseDependencies()) {
         self.dependencies = dependencies
     }
     
-    func fetchStopDetail(id: Int) -> AnyPublisher<StopDetail, TripError> {
+    public func fetchStopDetail(id: Int) -> AnyPublisher<StopDetail, TripError> {
         return dependencies.repository.retrieveStop(id: id)
-            .map { self.dependencies.mapper.map(response: $0) }
-            .eraseToAnyPublisher()
+            .flatMapNilEntityToError(mapperType: StopDetailResponseMapper.self, responseType: StopDetailResponse.self, resultType: StopDetail.self)
     }
 }

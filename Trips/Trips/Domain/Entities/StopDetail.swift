@@ -7,10 +7,18 @@
 //
 import Foundation
 
-struct StopDetail {
+public struct StopDetail {
     let userName: String
     let price: Double
     let stopTime: Date
     let paid: Bool
     let address: String
+    
+    init(userName: String, price: Double, stopTime: Date, paid: Bool, address: String) {
+        self.userName = userName
+        self.price = price
+        self.stopTime = stopTime
+        self.paid = paid
+        self.address = address
+    }
 }

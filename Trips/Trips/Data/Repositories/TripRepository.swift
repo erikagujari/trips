@@ -27,7 +27,7 @@ public protocol TripRepositoryProtocol {
     func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError>
 }
 
-public struct TripRepository: TripRepositoryProtocol {
+public class TripRepository: TripRepositoryProtocol {
     private let dependencies: TripRepositoryDependenciesProtocol
     
     public init(dependencies: TripRepositoryDependenciesProtocol = TripRepositoryDependencies()) {

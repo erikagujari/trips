@@ -7,12 +7,20 @@
 //
 import Foundation
 
-struct StopDetailResponseMapper {
-    func map(response: StopDetailResponse) -> StopDetail {
-        return StopDetail(userName: response.userName ?? "",
+public struct StopDetailResponseMapper: ResponseMapper {
+    typealias MappingSource = StopDetailResponse
+    typealias MappingResult = StopDetail
+    
+    static func map(response: StopDetailResponse) -> StopDetail? {
+        guard response.tripId != nil,
+            let userName = response.userName,
+            let address = response.address
+            else { return nil }
+        
+        return StopDetail(userName: userName,
                           price: response.price ?? 0,
                           stopTime: response.stopTime?.ISO8601Date ?? Date(),
                           paid: response.paid ?? false,
-                          address: response.address ?? "")
+                          address: address)
     }
 }
