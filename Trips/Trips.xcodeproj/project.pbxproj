@@ -472,15 +472,15 @@
 		8299A639240BC94A0043D6C7 /* TripsTests */ = {
 			isa = PBXGroup;
 			children = (
-				828AEE3A24974BEA005E3367 /* UseCases */,
+				8299A63C240BC94A0043D6C7 /* Info.plist */,
+				82813C4224927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift */,
+				82203D5C24190E45000DE5DE /* Contact */,
+				82C583F42491022000CA7C7D /* CoreData */,
+				82203D5B24190E2D000DE5DE /* Home */,
 				82FC011B24966B5B00FBBCAC /* Repositories */,
 				82FC011A24966B4E00FBBCAC /* Service */,
 				82813C4424927CEB00CA9083 /* URLSessionHTTPClient */,
-				82C583F42491022000CA7C7D /* CoreData */,
-				82203D5C24190E45000DE5DE /* Contact */,
-				82203D5B24190E2D000DE5DE /* Home */,
-				8299A63C240BC94A0043D6C7 /* Info.plist */,
-				82813C4224927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift */,
+				828AEE3A24974BEA005E3367 /* UseCases */,
 			);
 			path = TripsTests;
 			sourceTree = "<group>";
