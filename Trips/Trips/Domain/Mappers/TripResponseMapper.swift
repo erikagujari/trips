@@ -7,22 +7,32 @@
 //
 import Polyline
 
-struct TripResponseMapper {
-    func map(response: TripResponse) -> Trip {
-        return Trip(origin: DestinationResponseMapper().map(response: response.origin ?? DestinationResponse(address: nil,
-                                                                                                             point: nil)),
-                    stops: response.stops?.compactMap { StopResponseMapper().map(response: $0 )} ?? [],
-                    destination: DestinationResponseMapper().map(response: response.destination ?? DestinationResponse(address: nil,
-                                                                                                                       point: nil)),
-                    endTime: response.endTime?.ISO8601Date ?? Date(),
-                    startTime: response.startTime?.ISO8601Date ?? Date(),
-                    description: response.description ?? "",
-                    driverName: response.driverName ?? "",
-                    route: Polyline(encodedPolyline: response.route ?? "").coordinates ?? [],
-                    status: response.status ?? "")
+struct TripArrayResponseMapper: ResponseMapper {
+    static func map(response: [TripResponse]) -> [Trip]? {
+        let mappedResponse = response.compactMap { TripResponseMapper.map(response: $0) }
+        guard mappedResponse.isEmpty
+            else {
+                return mappedResponse
+        }
+        return nil
     }
-
-    func mapArray(response: [TripResponse]) -> [Trip] {
-        return response.map(map(response:))
+    
+    private struct TripResponseMapper: ResponseMapper {
+        static func map(response: TripResponse) -> Trip? {
+            guard let originResponse = response.origin,
+                let originMapped = DestinationResponseMapper.map(response: originResponse),
+                let destinationResponse = response.destination,
+                let destinationMapped = DestinationResponseMapper.map(response: destinationResponse)
+                else { return nil }
+            return Trip(origin: originMapped,
+                        stops: response.stops?.compactMap { StopResponseMapper.map(response: $0) } ?? [],
+                        destination: destinationMapped,
+                        endTime: response.endTime?.ISO8601Date ?? Date(),
+                        startTime: response.startTime?.ISO8601Date ?? Date(),
+                        description: response.description ?? "",
+                        driverName: response.driverName ?? "",
+                        route: Polyline(encodedPolyline: response.route ?? "").coordinates ?? [],
+                        status: response.status ?? "")
+        }
     }
 }

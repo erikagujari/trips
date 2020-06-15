@@ -13,12 +13,10 @@ protocol RetrieveTripsUseCaseProtocol {
 
 protocol RetrieveTripsUseCaseDependenciesProtocol {
     var repository: TripRepositoryProtocol { get }
-    var mapper: TripResponseMapper { get }
 }
 
 struct RetrieveTripsUseCaseDependencies: RetrieveTripsUseCaseDependenciesProtocol {
     var repository: TripRepositoryProtocol = TripRepository()
-    var mapper: TripResponseMapper = TripResponseMapper()
 }
 
 struct RetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
@@ -30,7 +28,6 @@ struct RetrieveTripsUseCase: RetrieveTripsUseCaseProtocol {
 
     var trips: AnyPublisher<[Trip], TripError> {
         return dependencies.repository.retrieveTrips()
-            .map { self.dependencies.mapper.mapArray(response: $0) }
-            .eraseToAnyPublisher()
+            .flatMapNilEntityToError(mapperType: TripArrayResponseMapper.self)
     }
 }

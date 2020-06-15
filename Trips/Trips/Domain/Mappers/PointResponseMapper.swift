@@ -6,9 +6,13 @@
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
 
-struct PointResponseMapper {
-    func map(response: PointResponse) -> Point {
-        return Point(latitude: response.latitude ?? 0.0,
-                     longitude: response.longitude ?? 0.0)
+struct PointResponseMapper: ResponseMapper {
+    static func map(response: PointResponse) -> Point? {
+        guard let latitude = response.latitude,
+            let longitude = response.longitude
+            else { return nil }
+        
+        return Point(latitude: latitude,
+                     longitude: longitude)
     }
 }

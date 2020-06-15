@@ -6,10 +6,12 @@
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
 
-struct DestinationResponseMapper {
-    func map(response: DestinationResponse) -> Destination {
+struct DestinationResponseMapper: ResponseMapper {
+    static func map(response: DestinationResponse) -> Destination? {
+        guard let pointResponse = response.point,
+            let pointMapped = PointResponseMapper.map(response: pointResponse)
+            else { return nil }
         return Destination(address: response.address ?? "",
-                           point: PointResponseMapper().map(response: response.point ?? PointResponse(latitude: nil,
-                                                                                                      longitude: nil)))
+                           point: pointMapped)
     }
 }

@@ -6,10 +6,12 @@
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
 
-struct StopResponseMapper {
-    func map(response: StopResponse) -> Stop {
-        return Stop(point: PointResponseMapper().map(response: response.point ?? PointResponse(latitude: nil,
-                                                                                               longitude: nil)),
-                    id: response.id ?? 0)
+struct StopResponseMapper: ResponseMapper {
+    static func map(response: StopResponse) -> Stop? {
+        guard let id = response.id,
+            let pointResponse = response.point,
+            let pointMapped = PointResponseMapper.map(response: pointResponse)
+            else { return nil }
+        return Stop(point: pointMapped, id: id)
     }
 }
