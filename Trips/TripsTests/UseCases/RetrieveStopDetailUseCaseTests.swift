@@ -12,32 +12,32 @@ import Combine
 
 final class RetrieveStopDetailUseCaseTests: XCTestCase {
     func test_fetchStopDetailWithInvalidIdDeliversTripServiceErrorWithErrorRepository() {
-        let sut = makeSUT(repository: ErrorRepository())
+        let sut = makeSUT(repository: TripErrorRepository())
         expect(sut: sut, withId: -111, toEndIn: .failure(.serviceError))
     }
     
     func test_fetchStopDetailWithValidIdDeliversTripServiceErrorWithErrorRepository() {
-        let sut = makeSUT(repository: ErrorRepository())
+        let sut = makeSUT(repository: TripErrorRepository())
         expect(sut: sut, withId: 1, toEndIn: .failure(.serviceError))
     }
     
     func test_fetchStopDetailWithInvalidIdDeliversTripParsingErrorWithInvalidRepository() {
-        let sut = makeSUT(repository: InvalidRepository())
+        let sut = makeSUT(repository: TripInvalidRepository())
         expect(sut: sut, withId: -111, toEndIn: .failure(.parsingError))
     }
     
     func test_fetchStopDetailWithValidIdDeliversTripParsingErrorWithInvalidRepository() {
-        let sut = makeSUT(repository: InvalidRepository())
+        let sut = makeSUT(repository: TripInvalidRepository())
         expect(sut: sut, withId: 1, toEndIn: .failure(.parsingError))
     }
     
     func test_fetchStopDetailWithInValidIdDeliversTripParsingErrorWithValidRepository() {
-        let sut = makeSUT(repository: ValidRepository())
+        let sut = makeSUT(repository: TripValidRepository())
         expect(sut: sut, withId: -2, toEndIn: .failure(.parsingError))
     }
     
     func test_fetchStopDetailWithValidIdDeliversSuccessWithValidRepository() {
-        let sut = makeSUT(repository: ValidRepository())
+        let sut = makeSUT(repository: TripValidRepository())
         expect(sut: sut, withId: 2, toEndIn: .finished)
     }
 }
@@ -70,73 +70,6 @@ extension RetrieveStopDetailUseCaseTests {
         
         init(repository: TripRepositoryProtocol) {
             self.repository = repository
-        }
-    }
-    
-    private struct ErrorRepository: TripRepositoryProtocol {
-        func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
-            return Future { promise in
-                promise(.failure(TripError.serviceError))
-            }.eraseToAnyPublisher()
-        }
-        
-        func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
-            return Future { promise in
-                promise(.failure(TripError.serviceError))
-            }.eraseToAnyPublisher()
-        }
-    }
-    
-    private struct InvalidRepository: TripRepositoryProtocol {
-        func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
-            return Future { promise in
-                promise(.failure(TripError.serviceError))
-            }.eraseToAnyPublisher()
-        }
-        
-        func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
-            return Future { promise in
-                let stopDetail = StopDetailResponse(userName: nil,
-                                                    point: nil,
-                                                    price: nil,
-                                                    stopTime: nil,
-                                                    paid: nil,
-                                                    address: nil,
-                                                    tripId: id)
-                promise(.success(stopDetail))
-            }.eraseToAnyPublisher()
-        }
-    }
-    
-    private struct ValidRepository: TripRepositoryProtocol {
-        func retrieveTrips() -> AnyPublisher<[TripResponse], TripError> {
-            return Future { promise in
-                promise(.failure(TripError.serviceError))
-            }.eraseToAnyPublisher()
-        }
-        
-        func retrieveStop(id: Int) -> AnyPublisher<StopDetailResponse, TripError> {
-            return Future { promise in
-                if id < 0 {
-                    let stopDetail = StopDetailResponse(userName: nil,
-                                                        point: nil,
-                                                        price: nil,
-                                                        stopTime: nil,
-                                                        paid: nil,
-                                                        address: nil,
-                                                        tripId: id)
-                    promise(.success(stopDetail))
-                } else {
-                    let stopDetail = StopDetailResponse(userName: "Bob",
-                                                        point: nil,
-                                                        price: nil,
-                                                        stopTime: nil,
-                                                        paid: nil,
-                                                        address: "FakeStreet 2nd Floor",
-                                                        tripId: id)
-                    promise(.success(stopDetail))
-                }
-            }.eraseToAnyPublisher()
         }
     }
 }

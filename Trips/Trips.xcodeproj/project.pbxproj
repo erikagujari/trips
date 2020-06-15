@@ -64,6 +64,8 @@
 		8299A62D240BC94A0043D6C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8299A62C240BC94A0043D6C7 /* Assets.xcassets */; };
 		8299A646240BCBEC0043D6C7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */; };
 		829F0228249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */; };
+		829F022A2497A5C7000F8A33 /* RetrieveTripsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829F02292497A5C7000F8A33 /* RetrieveTripsUseCaseTests.swift */; };
+		829F022D2497A63F000F8A33 /* TripMockRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829F022C2497A63F000F8A33 /* TripMockRepositories.swift */; };
 		82C583F82491026400CA7C7D /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */; };
 		82FC011924965C9A00FBBCAC /* ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011824965C9A00FBBCAC /* ServiceTests.swift */; };
 		82FC011D24966B7400FBBCAC /* TripRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FC011C24966B7400FBBCAC /* TripRepositoryTests.swift */; };
@@ -142,6 +144,8 @@
 		8299A63C240BC94A0043D6C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8299A645240BCBEC0043D6C7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+FlatMapNilEntityToError.swift"; sourceTree = "<group>"; };
+		829F02292497A5C7000F8A33 /* RetrieveTripsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveTripsUseCaseTests.swift; sourceTree = "<group>"; };
+		829F022C2497A63F000F8A33 /* TripMockRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMockRepositories.swift; sourceTree = "<group>"; };
 		82C583F72491026400CA7C7D /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		82FC011824965C9A00FBBCAC /* ServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTests.swift; sourceTree = "<group>"; };
 		82FC011C24966B7400FBBCAC /* TripRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepositoryTests.swift; sourceTree = "<group>"; };
@@ -427,7 +431,9 @@
 		828AEE3A24974BEA005E3367 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				829F022B2497A626000F8A33 /* Mocks */,
 				828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */,
+				829F02292497A5C7000F8A33 /* RetrieveTripsUseCaseTests.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -492,6 +498,14 @@
 				8224C8F6240C3B5900DC43CD /* Home */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		829F022B2497A626000F8A33 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				829F022C2497A63F000F8A33 /* TripMockRepositories.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		82C583F42491022000CA7C7D /* CoreData */ = {
@@ -754,6 +768,8 @@
 				828AEE3924974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift in Sources */,
 				828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */,
 				822497E8240FD11400150B8D /* MockHomeViewModelDependencies.swift in Sources */,
+				829F022A2497A5C7000F8A33 /* RetrieveTripsUseCaseTests.swift in Sources */,
+				829F022D2497A63F000F8A33 /* TripMockRepositories.swift in Sources */,
 				82813C4324927A2E00CA9083 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
