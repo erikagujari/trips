@@ -5,7 +5,6 @@
 //  Created by AGUJARI Erik on 10/03/2020.
 //  Copyright © 2020 ErikAgujari. All rights reserved.
 //
-import Combine
 import UIKit
 
 final class ContactViewController: UIViewController {
@@ -14,7 +13,6 @@ final class ContactViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
 
     private let viewModel: ContactViewModelProtocol
-    private var cancellable = Set<AnyCancellable>()
     private var activeView: UIView? = nil
 
     private let nameTextfied: UITextField = {
@@ -121,18 +119,18 @@ final class ContactViewController: UIViewController {
     }
 
     private func setupBinding() {
-        viewModel.$errorMessage.sink { [weak self] message in
-            guard let message = message else { return }
-
+        viewModel.errorMessage.onNext { [weak self] message in
+            guard !message.isEmpty else { return }
+            
             self?.showAlert(message: message)
-        }.store(in: &cancellable)
-
-        viewModel.$successMessage.sink { [weak self] message in
-            guard let message = message else { return }
+        }
+        
+        viewModel.successMessage.onNext { [weak self] message in
+            guard !message.isEmpty else { return }
 
             self?.showAlert(title: Titles.success,
                             message: message)
-        }.store(in: &cancellable)
+        }
     }
 }
 

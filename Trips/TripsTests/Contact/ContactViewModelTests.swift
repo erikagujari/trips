@@ -87,14 +87,14 @@ extension ContactViewModelTests {
     }
     
     private func expect(sut: ContactViewModelProtocol, form: FormModel, isValid: Bool, file: StaticString = #file, line: UInt = #line) {
-        XCTAssertNil(sut.errorMessage, file: file, line: line)
+        XCTAssertNil(sut.errorMessage.value, file: file, line: line)
         sut.submitForm(name: form.name,
                        surname: form.surname,
                        email: form.email,
                        phone: form.phone,
                        date: form.date,
                        description: form.description)
-        XCTAssertEqual(isValid, sut.errorMessage == nil, file: file, line: line)
-        XCTAssertEqual(isValid, sut.successMessage != nil, file: file, line: line)
+        XCTAssertEqual(isValid, sut.errorMessage.value == nil, file: file, line: line)
+        XCTAssertEqual(isValid, sut.successMessage.value != nil, file: file, line: line)
     }
 }

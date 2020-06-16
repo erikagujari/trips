@@ -57,6 +57,7 @@
 		82813C4624927D0200CA9083 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813C4524927D0200CA9083 /* URLSessionHTTPClientTests.swift */; };
 		828147FC2492099200887C56 /* EmptyViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828147FB2492099200887C56 /* EmptyViewContext.swift */; };
 		828AEE3924974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */; };
+		828B05D224989CC80082ABBB /* Observable+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828B05D124989CC80082ABBB /* Observable+Combine.swift */; };
 		8299A621240BC9480043D6C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A620240BC9480043D6C7 /* AppDelegate.swift */; };
 		8299A623240BC9480043D6C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A622240BC9480043D6C7 /* SceneDelegate.swift */; };
 		8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8299A624240BC9480043D6C7 /* HomeViewController.swift */; };
@@ -133,6 +134,7 @@
 		82813C4524927D0200CA9083 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		828147FB2492099200887C56 /* EmptyViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewContext.swift; sourceTree = "<group>"; };
 		828AEE3824974BE7005E3367 /* RetrieveStopDetailUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveStopDetailUseCaseTests.swift; sourceTree = "<group>"; };
+		828B05D124989CC80082ABBB /* Observable+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Combine.swift"; sourceTree = "<group>"; };
 		8299A61D240BC9480043D6C7 /* Trips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8299A620240BC9480043D6C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8299A622240BC9480043D6C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				822497E9240FE83900150B8D /* ViewController+Spinner.swift */,
 				822B3553241857BF00FCA359 /* UITextField+ToolBar.swift */,
 				829F0227249788DF000F8A33 /* Publisher+FlatMapNilEntityToError.swift */,
+				828B05D124989CC80082ABBB /* Observable+Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				827CCEB22418CEE1003EF1A3 /* SaveFormUseCase.swift in Sources */,
 				822855F02412B99000D34212 /* StopDetail.swift in Sources */,
 				8299A625240BC9480043D6C7 /* HomeViewController.swift in Sources */,
+				828B05D224989CC80082ABBB /* Observable+Combine.swift in Sources */,
 				8224C8F3240C38E400DC43CD /* TripResponse.swift in Sources */,
 				8245FA67240E865100CC9DB9 /* String+Date.swift in Sources */,
 				822497E1240FA94500150B8D /* HomeCellMapper.swift in Sources */,

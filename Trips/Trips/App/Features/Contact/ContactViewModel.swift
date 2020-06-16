@@ -7,12 +7,9 @@
 //
 import Combine
 
-class ContactPublishedProperties {
-    @Published var errorMessage: String? = nil
-    @Published var successMessage: String? = nil
-}
-
-protocol ContactViewModelProtocol: ContactPublishedProperties {
+protocol ContactViewModelProtocol {
+    var errorMessage: CombineObservableVar<String> { get }
+    var successMessage: CombineObservableVar<String> { get }
     func submitForm(name: String?, surname: String?, email: String?, phone: String?, date: String?, description: String?)
 }
 
@@ -26,8 +23,10 @@ struct ContactViewModelDependencies: ContactViewModelDependenciesProtocol {
     var saveFormUseCase: SaveFormUseCaseProtocol = SaveFormUseCase()
 }
 
-final class ContactViewModel: ContactPublishedProperties {
+final class ContactViewModel {
     private var dependencies: ContactViewModelDependenciesProtocol
+    var errorMessage: CombineObservableVar<String> = CombineObservableVar<String>()
+    var successMessage: CombineObservableVar<String> = CombineObservableVar<String>()
 
     init(dependencies: ContactViewModelDependenciesProtocol = ContactViewModelDependencies()) {
         self.dependencies = dependencies
@@ -59,9 +58,9 @@ final class ContactViewModel: ContactPublishedProperties {
             .sink(receiveCompletion: { [weak self] event in
                 switch event {
                 case .finished:
-                    self?.successMessage = Titles.saveSucceed
+                    self?.successMessage.next(value: Titles.saveSucceed)
                 case .failure(let error):
-                    self?.errorMessage = error.message
+                    self?.errorMessage.next(value: error.message)
                 }
                 }, receiveValue: { _ in })
             .store(in: &dependencies.cancellable)
@@ -77,7 +76,7 @@ extension ContactViewModel: ContactViewModelProtocol {
                                      date: date,
                                      description: description)
             else {
-                self.errorMessage = Titles.form
+                self.errorMessage.next(value: Titles.form)
                 return
         }
 
